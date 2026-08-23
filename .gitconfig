@@ -1,0 +1,3 @@
+[merge "unityyamlmerge"]
+    name = Unity smart merge
+    driver = 'C:/Program Files/Unity/Hub/Editor/6000.5.9f1/Editor/Data/Tools/UnityYAMLMerge.exe' merge --force --fallback none %O %A %B %P
