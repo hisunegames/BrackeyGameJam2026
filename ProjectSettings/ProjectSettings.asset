@@ -829,7 +829,25 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 1
   webEnableSubmoduleStrippingCompatibility: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: DOTWEEN
+    EmbeddedLinux: DOTWEEN
+    GameCoreScarlett: DOTWEEN
+    GameCoreXboxOne: DOTWEEN
+    Kepler: DOTWEEN
+    LinuxHeadlessSimulation: DOTWEEN
+    Nintendo Switch: DOTWEEN
+    Nintendo Switch 2: DOTWEEN
+    PS4: DOTWEEN
+    PS5: DOTWEEN
+    QNX: DOTWEEN
+    Standalone: DOTWEEN;TMP_PRESENT;USE_NEW_INPUT;USE_NAVMESH;USE_CINEMACHINE_3
+    VisionOS: DOTWEEN
+    WebGL: DOTWEEN;TMP_PRESENT;USE_NEW_INPUT;USE_NAVMESH;USE_CINEMACHINE_3
+    Windows Store Apps: DOTWEEN;TMP_PRESENT;USE_NEW_INPUT;USE_NAVMESH;USE_CINEMACHINE_3
+    XboxOne: DOTWEEN
+    iPhone: DOTWEEN
+    tvOS: DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
