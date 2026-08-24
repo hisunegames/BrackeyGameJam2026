@@ -1,6 +1,10 @@
+using DG.Tweening;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Splines.Interpolators;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -30,9 +34,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _sprintShakeAmplitude = 1f;
     [SerializeField] float _shakeBlendSpeed = 4f;
 
+    [Header("Health")]
+    [SerializeField] float _maxHealth = 100f;
+    [SerializeField] float _currentHealth = 100f;
 
     [Header("UI")]
     [SerializeField] TMPro.TMP_Text _staminaText;
+    [SerializeField] GameObject _playerHand;
+    [SerializeField] float _staminaBarDisappearDelay = 2f;
+    [SerializeField] GameObject _staminaBackground;
+    [SerializeField] GameObject _staminaBar;
+    [SerializeField] float _staminaRedThreshold;
 
     CharacterController _controller;
     float _standingHeight;
@@ -42,6 +54,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float _currentStamina;
     float _regenDelayTimer;
+    float _staminaBarDelayTimer;
 
     public float StaminaFraction => _currentStamina / _maxStamina;
 
@@ -115,20 +128,51 @@ public class PlayerController : MonoBehaviour
     float HandleSprint(bool isMoving)
     {
         bool wantsSprint = isMoving && !_isCrouching && _currentStamina > 0f && _sprintInputAction.action.IsPressed();
-
+        float t = 1f - Mathf.Clamp01((_currentStamina / _maxStamina) / _staminaRedThreshold);
+        _staminaBar.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, t);
+        _staminaBar.transform.localScale = new Vector2(_currentStamina / 100, 1f);
         if (wantsSprint)
         {
             _isSprinting = true;
             _currentStamina = Mathf.Max(0f, _currentStamina - _staminaDrainRate * Time.deltaTime);
+            
             _regenDelayTimer = _staminaRegenDelay;
+            _staminaBarDelayTimer = _staminaBarDisappearDelay;
+            if (_staminaBackground.GetComponent<Image>().color.a == 0) 
+            {
+                _staminaBackground.GetComponent<Image>().DOFade(1f, 0.05f);
+                _staminaBar.GetComponent<Image>().DOFade(1f, 0.05f);
+            }
+            else
+            {
+                _staminaBackground.GetComponent<Image>().DOKill();
+                _staminaBar.GetComponent<Image>().DOKill();
+                Color _staminaBackgroundColor = _staminaBackground.GetComponent<Image>().color;
+                _staminaBackgroundColor.a = 1;
+                _staminaBackground.GetComponent<Image>().color = _staminaBackgroundColor;
+                Color _staminaBarColor = _staminaBar.GetComponent<Image>().color;
+                _staminaBarColor.a = 1;
+                _staminaBar.GetComponent<Image>().color = _staminaBarColor;
+            }       
+            _playerHand.transform.DOScale(new Vector3(0.22f, 0.22f, 0.22f), 0.2f);
         }
         else
         {
             _isSprinting = false;
+            _playerHand.transform.DOScale( new Vector3(0.23f, 0.23f, 0.23f), 0.2f);
+
             if (_regenDelayTimer > 0f)
                 _regenDelayTimer -= Time.deltaTime;
             else
                 _currentStamina = Mathf.Min(_maxStamina, _currentStamina + _staminaRegenRate * Time.deltaTime);
+
+            if (_staminaBarDelayTimer > 0f)
+                _staminaBarDelayTimer -= Time.deltaTime;
+            else
+            {
+                _staminaBar.GetComponent<Image>().DOFade(0f, 1f);
+                _staminaBackground.GetComponent<Image>().DOFade(0f, 1f);
+            }
         }
 
         return _isSprinting ? _sprintSpeed : (_isCrouching ? _crouchMoveSpeed : _moveSpeed);
@@ -184,4 +228,5 @@ public class PlayerController : MonoBehaviour
         Vector3 pushDirection = new Vector3(hit.moveDirection.x, 0f, hit.moveDirection.z);
         body.linearVelocity = pushDirection * _pushForce;
     }
+
 }
