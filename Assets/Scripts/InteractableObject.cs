@@ -11,7 +11,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
 
     public string InteractPrompt => _promptText;
 
-    public void Interact(GameObject interactor)
+    public virtual void Interact(GameObject interactor)
     {
         if (_interactOnce && _hasBeenInteractedWith)
             return;

@@ -25,7 +25,16 @@ public class PlayerInteractor : MonoBehaviour
     {
         CurrentTarget = FindTarget();
 
-        if (CurrentTarget != null && _interactInputAction.action.WasPerformedThisFrame())
+        if (!_interactInputAction.action.WasPerformedThisFrame())
+            return;
+
+        if (NotepadUIManager.Instance != null && NotepadUIManager.Instance.IsOpen)
+        {
+            NotepadUIManager.Instance.CloseNotepad();
+            return;
+        }
+
+        if (CurrentTarget != null)
             CurrentTarget.Interact(gameObject);
     }
 

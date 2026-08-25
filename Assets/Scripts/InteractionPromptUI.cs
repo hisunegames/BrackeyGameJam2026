@@ -13,7 +13,7 @@ public class InteractionPromptUI : MonoBehaviour
         IInteractable target = _interactor.CurrentTarget;
         bool hasTarget = target != null;
 
-        string newText = hasTarget ? $"<wiggle a=0.1 f=0.2>Press {_interactor.InteractKeyDisplay} to {target.InteractPrompt}</>" : "";
+        string newText = hasTarget ? $"<wiggle a=0.1 f=0.2>Press E to {target.InteractPrompt}</>" : "";
         if (newText == _lastText)
             return;
 

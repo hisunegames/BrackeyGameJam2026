@@ -135,10 +135,10 @@ public class PlayerController : MonoBehaviour
         {
             _isSprinting = true;
             _currentStamina = Mathf.Max(0f, _currentStamina - _staminaDrainRate * Time.deltaTime);
-            
+
             _regenDelayTimer = _staminaRegenDelay;
             _staminaBarDelayTimer = _staminaBarDisappearDelay;
-            if (_staminaBackground.GetComponent<Image>().color.a == 0) 
+            if (_staminaBackground.GetComponent<Image>().color.a == 0)
             {
                 _staminaBackground.GetComponent<Image>().DOFade(1f, 0.05f);
                 _staminaBar.GetComponent<Image>().DOFade(1f, 0.05f);
@@ -153,13 +153,13 @@ public class PlayerController : MonoBehaviour
                 Color _staminaBarColor = _staminaBar.GetComponent<Image>().color;
                 _staminaBarColor.a = 1;
                 _staminaBar.GetComponent<Image>().color = _staminaBarColor;
-            }       
+            }
             _playerHand.transform.DOScale(new Vector3(0.22f, 0.22f, 0.22f), 0.2f);
         }
         else
         {
             _isSprinting = false;
-            _playerHand.transform.DOScale( new Vector3(0.23f, 0.23f, 0.23f), 0.2f);
+            _playerHand.transform.DOScale(new Vector3(0.23f, 0.23f, 0.23f), 0.2f);
 
             if (_regenDelayTimer > 0f)
                 _regenDelayTimer -= Time.deltaTime;
