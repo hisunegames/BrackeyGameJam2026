@@ -5,10 +5,10 @@ public class BillboardSprite : MonoBehaviour
 {
     [SerializeField] private Transform camera;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    private void Awake()
     {
-       
-;   }
+        camera = GameObject.FindGameObjectWithTag("PlayerCamera").transform;
+    }
     // Update is called once per frame
     void Update()
     {
