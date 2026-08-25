@@ -22,9 +22,13 @@ public class PhoneController : MonoBehaviour
         if (mapAction.triggered)
         {
             Debug.unityLogger.Log("Map");
+            map.SetActive(true);
+            notepad.SetActive(false);
         } else if (notepadAction.triggered)
         {
             Debug.unityLogger.Log("Notepad");
+            map.SetActive(false);
+            notepad.SetActive(true);
         }
     }
 }
