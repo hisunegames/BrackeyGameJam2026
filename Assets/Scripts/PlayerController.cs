@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     float _healthRegenDelayTimer;
 
     public float StaminaFraction => _currentStamina / _maxStamina;
+    public bool IsCrouching => _isCrouching;
 
     private void Awake()
     {
