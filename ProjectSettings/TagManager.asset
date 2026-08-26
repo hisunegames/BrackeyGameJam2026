@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerCamera
   - NPC
+  - QuestItem
   layers:
   - Default
   - TransparentFX
