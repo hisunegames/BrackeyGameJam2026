@@ -27,7 +27,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _PosterizeOn: 1
-    - _PosterizeSteps: 125.3
+    - _PosterizeSteps: 55
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
