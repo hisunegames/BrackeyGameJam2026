@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
     float _regenDelayTimer;
     float _staminaBarDelayTimer;
     float _healthRegenDelayTimer;
+    bool _isTalking;
 
     public float StaminaFraction => _currentStamina / _maxStamina;
     public bool IsCrouching => _isCrouching;
@@ -136,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
     float HandleSprint(bool isMoving)
     {
-        bool wantsSprint = isMoving && !_isCrouching && _currentStamina > 0f && _sprintInputAction.action.IsPressed();
+        bool wantsSprint = !_isTalking && isMoving && !_isCrouching && _currentStamina > 0f && _sprintInputAction.action.IsPressed();
         float t = 1f - Mathf.Clamp01((_currentStamina / _maxStamina) / _staminaRedThreshold);
         _staminaBar.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, t);
         Color barColor = Color.Lerp(Color.white, Color.red, t);
@@ -282,6 +283,21 @@ public class PlayerController : MonoBehaviour
 
         Vector3 pushDirection = new Vector3(hit.moveDirection.x, 0f, hit.moveDirection.z);
         body.linearVelocity = pushDirection * _pushForce;
+    }
+
+    // Sent by Dialogue System for Unity to conversation participants
+    void OnConversationStart(Transform actor)
+    {
+        _isTalking = true;
+        _isSprinting = false;
+
+        if (_sprintShake != null)
+            _sprintShake.AmplitudeGain = 0f;
+    }
+
+    void OnConversationEnd(Transform actor)
+    {
+        _isTalking = false;
     }
 
 }
