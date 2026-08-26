@@ -1,8 +1,13 @@
+using Language.Lua;
 using UnityEngine;
 
 public class Soundmanager : MonoBehaviour
 {
     [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip _menuSong;
+    [SerializeField] AudioClip _ambienceSong;
+    [SerializeField] AudioClip _taskSong;
+    [SerializeField] AudioClip _chaseMusic;
     public Soundmanager Instance;
     private void Awake()
     {
@@ -27,8 +32,38 @@ public class Soundmanager : MonoBehaviour
         }
     }
 
+    public void SetSongVolume(float volume)
+    {
+        audioSource.volume = volume;
+    }
     public float GetVolume()
     {
         return audioSource.volume;
     }
+
+    public void SongState(bool state)
+    {
+        if (state == false)
+            audioSource.Pause();
+        else
+            audioSource.Play();
+    }    
+
+    public void ChangeMusic(string Song)
+    {
+        SetSongVolume(0.1f);
+        if (Song == "Menu")
+            audioSource.clip = _menuSong;
+        else if (Song == "Ambience")
+            audioSource.clip = _ambienceSong;
+        else if (Song == "Task")
+            audioSource.clip = _taskSong;
+        else if (Song == "Chase")
+        {
+            audioSource.clip = _chaseMusic;
+            SetSongVolume(0.1f);
+        }
+            
+    }
+
 }
