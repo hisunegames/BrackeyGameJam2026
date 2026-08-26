@@ -129,7 +129,9 @@ public class PlayerController : MonoBehaviour
     {
         bool wantsSprint = isMoving && !_isCrouching && _currentStamina > 0f && _sprintInputAction.action.IsPressed();
         float t = 1f - Mathf.Clamp01((_currentStamina / _maxStamina) / _staminaRedThreshold);
-        _staminaBar.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, t);
+        Color barColor = Color.Lerp(Color.white, Color.red, t);
+        barColor.a = _staminaBar.GetComponent<Image>().color.a;
+        _staminaBar.GetComponent<Image>().color = barColor;
         _staminaBar.transform.localScale = new Vector2(_currentStamina / 100, 1f);
         if (wantsSprint)
         {

@@ -27,6 +27,9 @@ public class RandomMovement : MonoBehaviour
 
     void Update()
     {
+        if (_agent.isStopped)
+            return;
+
         if (_isWaiting)
         {
             _waitTimer -= Time.deltaTime;
@@ -38,6 +41,17 @@ public class RandomMovement : MonoBehaviour
             _isWaiting = true;
             _waitTimer = Random.Range(_minPauseTime, _maxPauseTime);
         }
+    }
+
+    // Sent by Dialogue System for Unity to conversation participants
+    void OnConversationStart(Transform actor)
+    {
+        _agent.isStopped = true;
+    }
+
+    void OnConversationEnd(Transform actor)
+    {
+        _agent.isStopped = false;
     }
 
     void MoveToNewDestination()
