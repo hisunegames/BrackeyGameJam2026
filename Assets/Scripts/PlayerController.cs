@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
     [Header("Health")]
     [SerializeField] float _maxHealth = 100f;
     [SerializeField] float _currentHealth = 100f;
+    [SerializeField] float _natRegenDelay = 5f;
+    [SerializeField] float _natRegenRate = 1f;
 
     [Header("UI")]
     [SerializeField] TMPro.TMP_Text _staminaText;
@@ -45,6 +47,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject _staminaBackground;
     [SerializeField] GameObject _staminaBar;
     [SerializeField] float _staminaRedThreshold;
+    [SerializeField] GameObject _blackVignette;
+    [SerializeField] GameObject _redVignette;
+    [SerializeField] float _asthmaThreshold;
+    [SerializeField] float _erythropsiaThreshold;
 
     CharacterController _controller;
     float _standingHeight;
@@ -55,6 +61,7 @@ public class PlayerController : MonoBehaviour
     float _currentStamina;
     float _regenDelayTimer;
     float _staminaBarDelayTimer;
+    float _healthRegenDelayTimer;
 
     public float StaminaFraction => _currentStamina / _maxStamina;
 
@@ -99,6 +106,7 @@ public class PlayerController : MonoBehaviour
         float speed = HandleSprint(moveInputIn3D.sqrMagnitude > 0.0001f);
         HandleGravityAndJump();
         HandleSprintShake();
+        HandleHealth();
 
         Vector3 motion = moveDirection * speed;
         motion.y = _verticalVelocity;
@@ -129,10 +137,25 @@ public class PlayerController : MonoBehaviour
     {
         bool wantsSprint = isMoving && !_isCrouching && _currentStamina > 0f && _sprintInputAction.action.IsPressed();
         float t = 1f - Mathf.Clamp01((_currentStamina / _maxStamina) / _staminaRedThreshold);
+        _staminaBar.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, t);
         Color barColor = Color.Lerp(Color.white, Color.red, t);
         barColor.a = _staminaBar.GetComponent<Image>().color.a;
         _staminaBar.GetComponent<Image>().color = barColor;
         _staminaBar.transform.localScale = new Vector2(_currentStamina / 100, 1f);
+
+        bool debounce = false;
+        if ((_currentStamina / _maxStamina) < _asthmaThreshold && debounce == false)
+        {
+            _blackVignette.GetComponent<Image>().DOKill();
+            _blackVignette.GetComponent<Image>().DOFade(1f, 0.2f);
+            debounce = true;
+        }
+        else
+        {
+            _blackVignette.GetComponent<Image>().DOFade(0f, 0.2f);
+            debounce = false;
+        }
+
         if (wantsSprint)
         {
             _isSprinting = true;
@@ -214,6 +237,35 @@ public class PlayerController : MonoBehaviour
 
         Vector3 origin = transform.position + _controller.center + Vector3.up * currentTop;
         return !Physics.SphereCast(origin, _controller.radius * 0.9f, Vector3.up, out _, checkDistance, _obstructionLayers, QueryTriggerInteraction.Ignore);
+    }
+
+     void HandleHealth()
+    {
+
+        _healthRegenDelayTimer -= Time.deltaTime;
+        if (_healthRegenDelayTimer <= 0)
+            _currentHealth = Mathf.Min(_maxHealth, _currentHealth + _natRegenRate * Time.deltaTime);
+
+        bool debounce = false;
+        if ((_currentHealth / _maxHealth) < _erythropsiaThreshold && debounce == false)
+        {
+            debounce = true;
+            _redVignette.GetComponent<Image>().DOKill();
+            _redVignette.GetComponent<Image>().DOFade(1f, 0.2f);
+        }
+        else
+        {
+            _redVignette.GetComponent<Image>().DOFade(0f, 0.2f);
+            debounce = false;
+        }
+            
+    }
+    public void TakeDamage(float damage)
+    {
+        _currentHealth -= damage;
+        _healthRegenDelayTimer = _natRegenDelay;
+        if (_currentHealth < 0f)
+            Debug.Log("Game Over");
     }
 
     // CharacterController doesn't push Rigidbodies on its own (and, having no Rigidbody itself,
