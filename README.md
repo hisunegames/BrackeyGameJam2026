@@ -11,3 +11,6 @@ Brackeys Game Jam 2026
 ### Check out **https://github.com/TomDuchene/unity-git-locks** to learn more about how to use Git LFS locks with Unity as a GUI tool to prevent merge conflicts on scenes and prefabs.
 
 For merge conflicts `git mergetool --tool=unityyamlmerge`
+
+Push large files to Git LFS: `git lfs push origin main`
+Fetch large files from Git LFS: `git lfs fetch origin main -all`
