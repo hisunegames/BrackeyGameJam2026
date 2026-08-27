@@ -71,6 +71,11 @@ public class GameManager : MonoBehaviour
             soundManager.ChangeMusic("Ambience");
             soundManager.SongState(true);
         }
+        else if (newSequence == GameplaySequence.Penalty)
+        {
+            soundManager.ChangeMusic("Entity");
+            soundManager.SongState(true);
+        }
 
         OnSequenceChanged?.Invoke(newSequence);
     }
