@@ -7,7 +7,8 @@ public class Soundmanager : MonoBehaviour
     [SerializeField] AudioClip _menuSong;
     [SerializeField] AudioClip _ambienceSong;
     [SerializeField] AudioClip _taskSong;
-    [SerializeField] AudioClip _chaseMusic;
+    [SerializeField] AudioClip _chaseIntro;
+    [SerializeField] AudioClip _chaseChase;
     public Soundmanager Instance;
     private void Awake()
     {
@@ -58,9 +59,14 @@ public class Soundmanager : MonoBehaviour
             audioSource.clip = _ambienceSong;
         else if (Song == "Task")
             audioSource.clip = _taskSong;
+        else if (Song == "Entity")
+        {
+            audioSource.clip = _chaseIntro;
+            SetSongVolume(0.2f);
+        }
         else if (Song == "Chase")
         {
-            audioSource.clip = _chaseMusic;
+            audioSource.clip = _chaseChase;
             SetSongVolume(0.2f);
         }
             
