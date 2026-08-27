@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class LightsOutController : MonoBehaviour
@@ -9,6 +10,11 @@ public class LightsOutController : MonoBehaviour
     [SerializeField] float _fogStartDistance = 2f;
     [SerializeField] float _fogEndDistance = 10f;
     [SerializeField] Color _fogColor = Color.black;
+    [SerializeField] float _openFogDistance = 500f;
+
+    [Header("Transition")]
+    [SerializeField] float _transitionDuration = 1.5f;
+    [SerializeField] Ease _transitionEase = Ease.InQuad;
 
     public static LightsOutController Instance { get; private set; }
 
@@ -19,10 +25,9 @@ public class LightsOutController : MonoBehaviour
     Color[] _originalLightColors;
 
     bool _originalFogEnabled;
-    FogMode _originalFogMode;
-    Color _originalFogColor;
-    float _originalFogStart;
-    float _originalFogEnd;
+
+    Tween _fogStartTween;
+    Tween _fogEndTween;
 
     void Awake()
     {
@@ -39,10 +44,9 @@ public class LightsOutController : MonoBehaviour
         }
 
         _originalFogEnabled = RenderSettings.fog;
-        _originalFogMode = RenderSettings.fogMode;
-        _originalFogColor = RenderSettings.fogColor;
-        _originalFogStart = RenderSettings.fogStartDistance;
-        _originalFogEnd = RenderSettings.fogEndDistance;
+        RenderSettings.fogMode = FogMode.Linear;
+        RenderSettings.fogStartDistance = _openFogDistance;
+        RenderSettings.fogEndDistance = _openFogDistance * 1.5f;
     }
 
     void OnEnable()
@@ -67,24 +71,27 @@ public class LightsOutController : MonoBehaviour
             if (_lights[i] == null)
                 continue;
 
-            _lights[i].color = isLightsOut ? _penaltyLightColor : _originalLightColors[i];
+            _lights[i].DOKill();
+            _lights[i].DOColor(isLightsOut ? _penaltyLightColor : _originalLightColors[i], _transitionDuration).SetEase(_transitionEase);
         }
 
-        if (isLightsOut)
-        {
-            RenderSettings.fog = true;
-            RenderSettings.fogMode = FogMode.Linear;
-            RenderSettings.fogColor = _fogColor;
-            RenderSettings.fogStartDistance = _fogStartDistance;
-            RenderSettings.fogEndDistance = _fogEndDistance;
-        }
-        else
-        {
-            RenderSettings.fog = _originalFogEnabled;
-            RenderSettings.fogMode = _originalFogMode;
-            RenderSettings.fogColor = _originalFogColor;
-            RenderSettings.fogStartDistance = _originalFogStart;
-            RenderSettings.fogEndDistance = _originalFogEnd;
-        }
+        _fogStartTween?.Kill();
+        _fogEndTween?.Kill();
+
+        RenderSettings.fog = true;
+        RenderSettings.fogColor = _fogColor;
+
+        float targetStart = isLightsOut ? _fogStartDistance : _openFogDistance;
+        float targetEnd = isLightsOut ? _fogEndDistance : _openFogDistance * 1.5f;
+
+        _fogStartTween = DOVirtual.Float(RenderSettings.fogStartDistance, targetStart, _transitionDuration, value => RenderSettings.fogStartDistance = value)
+            .SetEase(_transitionEase);
+        _fogEndTween = DOVirtual.Float(RenderSettings.fogEndDistance, targetEnd, _transitionDuration, value => RenderSettings.fogEndDistance = value)
+            .SetEase(_transitionEase)
+            .OnComplete(() =>
+            {
+                if (!isLightsOut)
+                    RenderSettings.fog = _originalFogEnabled;
+            });
     }
 }

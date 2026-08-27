@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] CinemachineBasicMultiChannelPerlin _sprintShake;
     [SerializeField] float _sprintShakeAmplitude = 1f;
     [SerializeField] float _shakeBlendSpeed = 4f;
+    [SerializeField] float _handShakeStrength = 0.02f;
+    [SerializeField] int _handShakeVibrato = 10;
+    [SerializeField] float _handShakeDuration = 0.3f;
 
     [Header("Health")]
     [SerializeField] float _maxHealth = 100f;
@@ -63,6 +66,8 @@ public class PlayerController : MonoBehaviour
     float _staminaBarDelayTimer;
     float _healthRegenDelayTimer;
     bool _isTalking;
+    Vector3 _handRestPosition;
+    Tween _handShakeTween;
 
     public float StaminaFraction => _currentStamina / _maxStamina;
     public bool IsCrouching => _isCrouching;
@@ -72,6 +77,9 @@ public class PlayerController : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _standingHeight = _controller.height;
         _currentStamina = _maxStamina;
+
+        if (_playerHand != null)
+            _handRestPosition = _playerHand.transform.localPosition;
     }
 
     private void OnEnable()
@@ -137,6 +145,7 @@ public class PlayerController : MonoBehaviour
 
     float HandleSprint(bool isMoving)
     {
+        bool wasSprinting = _isSprinting;
         bool wantsSprint = !_isTalking && isMoving && !_isCrouching && _currentStamina > 0f && _sprintInputAction.action.IsPressed();
         float t = 1f - Mathf.Clamp01((_currentStamina / _maxStamina) / _staminaRedThreshold);
         _staminaBar.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, t);
@@ -182,11 +191,17 @@ public class PlayerController : MonoBehaviour
                 _staminaBar.GetComponent<Image>().color = _staminaBarColor;
             }
             _playerHand.transform.DOScale(new Vector3(0.22f, 0.22f, 0.22f), 0.2f);
+
+            if (!wasSprinting)
+                StartHandShake();
         }
         else
         {
             _isSprinting = false;
             _playerHand.transform.DOScale(new Vector3(0.23f, 0.23f, 0.23f), 0.2f);
+
+            if (wasSprinting)
+                StopHandShake();
 
             if (_regenDelayTimer > 0f)
                 _regenDelayTimer -= Time.deltaTime;
@@ -203,6 +218,26 @@ public class PlayerController : MonoBehaviour
         }
 
         return _isSprinting ? _sprintSpeed : (_isCrouching ? _crouchMoveSpeed : _moveSpeed);
+    }
+
+    void StartHandShake()
+    {
+        if (_playerHand == null)
+            return;
+
+        _handShakeTween?.Kill();
+        _handShakeTween = _playerHand.transform.DOShakePosition(_handShakeDuration, _handShakeStrength, _handShakeVibrato)
+            .SetLoops(-1, LoopType.Restart);
+    }
+
+    void StopHandShake()
+    {
+        if (_playerHand == null)
+            return;
+
+        _handShakeTween?.Kill();
+        _handShakeTween = null;
+        _playerHand.transform.DOLocalMove(_handRestPosition, 0.15f);
     }
 
     void HandleSprintShake()
@@ -290,6 +325,7 @@ public class PlayerController : MonoBehaviour
     {
         _isTalking = true;
         _isSprinting = false;
+        StopHandShake();
 
         if (_sprintShake != null)
             _sprintShake.AmplitudeGain = 0f;
