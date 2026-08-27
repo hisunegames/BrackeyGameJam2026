@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
             soundManager.SongState(true);
         }
 
+
         OnSequenceChanged?.Invoke(newSequence);
     }
 

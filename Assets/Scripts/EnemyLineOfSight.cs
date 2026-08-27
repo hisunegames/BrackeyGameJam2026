@@ -11,6 +11,7 @@ public class EnemyLineOfSight : MonoBehaviour
     [SerializeField] float _crouchViewDistance = 6f;
     [SerializeField, Range(0f, 360f)] float _viewAngle = 90f;
     [SerializeField] LayerMask _obstructionLayers = ~0;
+    [SerializeField] float _obstructionCheckRadius = 0.1f;
 
     [Header("Presence Detection")]
     [SerializeField] float _presenceRadius = 3f;
@@ -51,7 +52,7 @@ public class EnemyLineOfSight : MonoBehaviour
         bool isCrouching = _target.TryGetComponent(out PlayerController player) && player.IsCrouching;
 
         float presenceRadius = isCrouching ? _crouchPresenceRadius : _presenceRadius;
-        IsPlayerInPresenceRange = distance <= presenceRadius;
+        IsPlayerInPresenceRange = distance <= presenceRadius && HasClearPath(eyePos, toTarget, distance);
 
         CanSeePlayer = CheckLineOfSight(eyePos, toTarget, distance, isCrouching);
     }
@@ -66,7 +67,12 @@ public class EnemyLineOfSight : MonoBehaviour
         if (angle > _viewAngle * 0.5f)
             return false;
 
-        if (Physics.Raycast(eyePos, toTarget.normalized, out RaycastHit hit, distance, _obstructionLayers, QueryTriggerInteraction.Ignore)
+        return HasClearPath(eyePos, toTarget, distance);
+    }
+
+    bool HasClearPath(Vector3 eyePos, Vector3 toTarget, float distance)
+    {
+        if (Physics.SphereCast(eyePos, _obstructionCheckRadius, toTarget.normalized, out RaycastHit hit, distance, _obstructionLayers, QueryTriggerInteraction.Ignore)
             && hit.transform.root != _target.root)
         {
             return false;
