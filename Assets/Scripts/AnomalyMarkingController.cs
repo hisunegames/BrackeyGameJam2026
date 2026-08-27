@@ -10,10 +10,14 @@ public class AnomalyMarkingController : MonoBehaviour
     [SerializeField] LayerMask _markableLayers = ~0;
     [SerializeField] float _holdDuration = 1f;
     [SerializeField] Image _holdFillBar;
+    [SerializeField] float _fillDrainSpeed = 2f;
+    [SerializeField] Color _fillingColor = Color.white;
+    [SerializeField] Color _completeColor = Color.green;
 
     AnomalyMarker _currentTarget;
     float _holdTimer;
     bool _hasTriggered;
+    float _displayedFill;
 
     void OnEnable()
     {
@@ -27,10 +31,18 @@ public class AnomalyMarkingController : MonoBehaviour
 
     void Update()
     {
+        float targetFill = UpdateHoldState();
+
+        _displayedFill = Mathf.MoveTowards(_displayedFill, targetFill, _fillDrainSpeed * Time.deltaTime);
+        UpdateFillBar(_displayedFill, _hasTriggered);
+    }
+
+    float UpdateHoldState()
+    {
         if (!_markInputAction.action.IsPressed())
         {
             ResetHold();
-            return;
+            return 0f;
         }
 
         AnomalyMarker target = FindTarget();
@@ -43,16 +55,18 @@ public class AnomalyMarkingController : MonoBehaviour
         }
 
         if (_currentTarget == null || _hasTriggered)
-            return;
+            return 0f;
 
         _holdTimer += Time.deltaTime;
-        UpdateFillBar(_holdTimer / _holdDuration);
 
         if (_holdTimer >= _holdDuration)
         {
             _currentTarget.ToggleMark();
             _hasTriggered = true;
+            return 0f;
         }
+
+        return _holdTimer / _holdDuration;
     }
 
     void ResetHold()
@@ -60,13 +74,15 @@ public class AnomalyMarkingController : MonoBehaviour
         _currentTarget = null;
         _holdTimer = 0f;
         _hasTriggered = false;
-        UpdateFillBar(0f);
     }
 
-    void UpdateFillBar(float fillAmount)
+    void UpdateFillBar(float fillAmount, bool isComplete)
     {
-        if (_holdFillBar != null)
-            _holdFillBar.fillAmount = Mathf.Clamp01(fillAmount);
+        if (_holdFillBar == null)
+            return;
+
+        _holdFillBar.fillAmount = Mathf.Clamp01(fillAmount);
+        _holdFillBar.color = isComplete ? _completeColor : _fillingColor;
     }
 
     AnomalyMarker FindTarget()
