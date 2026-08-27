@@ -7,10 +7,11 @@ public class QuestItemSpawner : MonoBehaviour
 
     [Header("Spawn Settings")]
     [SerializeField] Transform _spawnCenter;
+    [SerializeField] Vector3 _spawnOffset;
     [SerializeField] float _spawnRadiusX = 10f;
     [SerializeField] float _spawnRadiusZ = 10f;
 
-    Vector3 SpawnCenter => _spawnCenter != null ? _spawnCenter.position : transform.position;
+    Vector3 SpawnCenter => (_spawnCenter != null ? _spawnCenter.position : transform.position) + _spawnOffset;
 
     void Start()
     {
