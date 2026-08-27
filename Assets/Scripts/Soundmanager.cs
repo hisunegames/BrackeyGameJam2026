@@ -51,7 +51,7 @@ public class Soundmanager : MonoBehaviour
 
     public void ChangeMusic(string Song)
     {
-        SetSongVolume(0.1f);
+        SetSongVolume(0.4f);
         if (Song == "Menu")
             audioSource.clip = _menuSong;
         else if (Song == "Ambience")
@@ -61,7 +61,7 @@ public class Soundmanager : MonoBehaviour
         else if (Song == "Chase")
         {
             audioSource.clip = _chaseMusic;
-            SetSongVolume(0.1f);
+            SetSongVolume(0.2f);
         }
             
     }

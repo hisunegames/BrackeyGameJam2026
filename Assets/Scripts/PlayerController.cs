@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
         Color barColor = Color.Lerp(Color.white, Color.red, t);
         barColor.a = _staminaBar.GetComponent<Image>().color.a;
         _staminaBar.GetComponent<Image>().color = barColor;
-        _staminaBar.transform.localScale = new Vector2(_currentStamina / 100, 1f);
+        _staminaBar.transform.localScale = new Vector2(_currentStamina / _maxStamina, 1f);
 
         bool debounce = false;
         if ((_currentStamina / _maxStamina) < _asthmaThreshold && debounce == false)
