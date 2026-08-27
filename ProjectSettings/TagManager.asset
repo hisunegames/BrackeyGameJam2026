@@ -3,17 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - PlayerCamera
+  - NPC
+  - QuestItem
+  - NPCIndicator
+  - Lights
+  - Minimap
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Terrian
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Walkable
+  - Player
+  - Minimap
   - 
   - 
   - 
@@ -40,6 +46,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Minimap
+    uniqueID: 1466169221
     locked: 0
   m_RenderingLayers:
   - Default
