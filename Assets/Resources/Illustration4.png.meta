@@ -118,7 +118,7 @@ TextureImporter:
         width: 3840
         height: 1017
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -135,12 +135,12 @@ TextureImporter:
       name: Illustration4_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 3840
-        height: 998
+        x: 1731
+        y: 580
+        width: 422
+        height: 255
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
