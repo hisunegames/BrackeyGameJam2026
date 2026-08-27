@@ -7,5 +7,8 @@ public class NotepadHandler : InteractableObject
     {
         base.Interact(interactor);
         NotepadUIManager.Instance.OpenNotepad(_noteData);
+
+        if (NoteAppUIManager.Instance != null)
+            NoteAppUIManager.Instance.RegisterNote(_noteData);
     }
 }

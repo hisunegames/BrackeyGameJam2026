@@ -6,7 +6,6 @@ public class QuestItemSpawner : MonoBehaviour
     [SerializeField] GameObject[] _itemVariants;
 
     [Header("Spawn Settings")]
-    [SerializeField] int _itemCount = 5;
     [SerializeField] Transform _spawnCenter;
     [SerializeField] float _spawnRadiusX = 10f;
     [SerializeField] float _spawnRadiusZ = 10f;
@@ -15,19 +14,18 @@ public class QuestItemSpawner : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < _itemCount; i++)
-            SpawnItem();
+        foreach (GameObject prefab in _itemVariants)
+            SpawnItem(prefab);
     }
 
-    void SpawnItem()
+    void SpawnItem(GameObject prefab)
     {
-        if (_itemVariants.Length == 0)
+        if (prefab == null)
             return;
 
         if (!NavMeshSpawner.TryGetRandomPointInEllipse(SpawnCenter, _spawnRadiusX, _spawnRadiusZ, out Vector3 point))
             return;
 
-        GameObject prefab = _itemVariants[Random.Range(0, _itemVariants.Length)];
         Instantiate(prefab, point, Quaternion.identity);
     }
 
