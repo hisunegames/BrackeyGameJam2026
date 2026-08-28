@@ -102,6 +102,11 @@ public class EnemyChaser : MonoBehaviour
         }
     }
 
+    public void ForceChase()
+    {
+        EnterChase();
+    }
+
     void FaceTarget()
     {
         Vector3 direction = _target.position - transform.position;
@@ -132,6 +137,7 @@ public class EnemyChaser : MonoBehaviour
         _loseSightTimer = _loseSightDelay;
         _agent.isStopped = false;
         _agent.speed = _chaseSpeed;
+        _agent.SetDestination(_target.position);
 
         if (_animator != null)
         {
@@ -142,10 +148,15 @@ public class EnemyChaser : MonoBehaviour
 
         if (_audioSource != null && _screamSound != null)
             _audioSource.PlayOneShot(_screamSound);
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.SetSequence(GameplaySequence.Chase);
     }
 
     void EnterIdle()
     {
+        bool wasChasing = CurrentState == EnemyState.Chase;
+
         CurrentState = EnemyState.Idle;
         _agent.isStopped = false;
         _agent.speed = _normalSpeed;
@@ -159,6 +170,14 @@ public class EnemyChaser : MonoBehaviour
         {
             _animator.SetBool(_isAlertedParam, false);
             _animator.SetBool(_isChasingParam, false);
+        }
+
+        if (wasChasing && GameManager.Instance != null && GameManager.Instance.CurrentSequence == GameplaySequence.Chase)
+        {
+            // If a penalty encounter is still unresolved (the hide timer hasn't run out), resume hiding instead of
+            // fully ending it - escaping a chase shouldn't be a free pass on the rest of the timer.
+            bool resumePenalty = PenaltyManager.Instance != null && PenaltyManager.Instance.IsEncounterActive;
+            GameManager.Instance.SetSequence(resumePenalty ? GameplaySequence.Penalty : GameplaySequence.Normal);
         }
     }
 }
