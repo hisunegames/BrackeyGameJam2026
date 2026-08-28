@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Soundmanager soundManager;
     [SerializeField] SFX sfxManager;
 
+    bool debounce = false;
+
     public GameState CurrentState { get; private set; } = GameState.Menu;
     public GameplaySequence CurrentSequence { get; private set; } = GameplaySequence.Normal;
 
@@ -71,10 +73,16 @@ public class GameManager : MonoBehaviour
         {
             soundManager.ChangeMusic("Ambience");
             soundManager.SongState(true);
+            debounce = false;
         }
         else if (newSequence == GameplaySequence.Penalty)
         {
-            sfxManager.PlayMusic("breaker");
+            if (debounce == false)
+            {
+                sfxManager.PlayMusic("breaker");
+                debounce = true;
+            }
+            
             soundManager.ChangeMusic("Entity");
             soundManager.SongState(true);
         }
