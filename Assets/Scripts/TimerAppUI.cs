@@ -48,6 +48,9 @@ public class TimerAppUI : MonoBehaviour
 
     string FormatHideText()
     {
+        if (PenaltyManager.Instance != null && !PenaltyManager.Instance.IsElectricBoxFixed)
+            return "<shake a=0.3 d=0.1>FIND THE ELECTRIC BOX!!</>";
+
         float remainingTime = PenaltyManager.Instance != null ? PenaltyManager.Instance.RemainingTime : 0f;
         int seconds = Mathf.CeilToInt(Mathf.Max(0f, remainingTime));
         return $"<shake a=0.3 d=0.1>HIDE!! {seconds / 60:00}:{seconds % 60:00}</>";

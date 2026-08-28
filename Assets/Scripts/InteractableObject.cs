@@ -10,6 +10,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
     bool _hasBeenInteractedWith;
 
     public string InteractPrompt => _promptText;
+    public virtual bool CanInteract => !(_interactOnce && _hasBeenInteractedWith);
 
     public virtual void Interact(GameObject interactor)
     {

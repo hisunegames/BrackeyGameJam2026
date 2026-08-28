@@ -12464,8 +12464,8 @@ MonoBehaviour:
       conditionsString: 
       userScript: 'SetQuestState("BoyQuest", "active");
 
-        ShowAlert("New
-        Quest: Bring boy to his mom")'
+        ShowAlert("New Quest:
+        Bring boy to his mom")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []

@@ -22,6 +22,7 @@ public class PenaltyManager : MonoBehaviour
 
     public static PenaltyManager Instance { get; private set; }
     public bool IsEncounterActive { get; private set; }
+    public bool IsElectricBoxFixed { get; private set; }
 
     readonly List<GameObject> _spawnedMonsters = new();
     bool _isPenaltyActive;
@@ -70,15 +71,25 @@ public class PenaltyManager : MonoBehaviour
     void StartPenalty()
     {
         IsEncounterActive = true;
+        IsElectricBoxFixed = false;
         _isPenaltyActive = true;
         RemainingTime = _penaltyDuration;
         OnPenaltyTimerChanged?.Invoke(RemainingTime);
         SpawnMonster();
     }
 
+    public void NotifyElectricBoxFixed()
+    {
+        if (IsElectricBoxFixed)
+            return;
+
+        IsElectricBoxFixed = true;
+        OnPenaltyTimerChanged?.Invoke(RemainingTime);
+    }
+
     void Update()
     {
-        if (!_isPenaltyActive)
+        if (!_isPenaltyActive || !IsElectricBoxFixed)
             return;
 
         RemainingTime -= Time.deltaTime;

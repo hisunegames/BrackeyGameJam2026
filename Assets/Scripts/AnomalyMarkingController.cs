@@ -12,7 +12,6 @@ public class AnomalyMarkingController : MonoBehaviour
     [SerializeField] Image _holdFillBar;
     [SerializeField] float _fillDrainSpeed = 2f;
     [SerializeField] Color _fillingColor = Color.white;
-    [SerializeField] Color _completeColor = Color.green;
 
     AnomalyMarker _currentTarget;
     float _holdTimer;
@@ -33,8 +32,15 @@ public class AnomalyMarkingController : MonoBehaviour
     {
         float targetFill = UpdateHoldState();
 
+        if (_hasTriggered)
+        {
+            _displayedFill = 0f;
+            HideFillBar();
+            return;
+        }
+
         _displayedFill = Mathf.MoveTowards(_displayedFill, targetFill, _fillDrainSpeed * Time.deltaTime);
-        UpdateFillBar(_displayedFill, _hasTriggered);
+        UpdateFillBar(_displayedFill);
     }
 
     float UpdateHoldState()
@@ -76,13 +82,20 @@ public class AnomalyMarkingController : MonoBehaviour
         _hasTriggered = false;
     }
 
-    void UpdateFillBar(float fillAmount, bool isComplete)
+    void UpdateFillBar(float fillAmount)
     {
         if (_holdFillBar == null)
             return;
 
+        _holdFillBar.enabled = true;
         _holdFillBar.fillAmount = Mathf.Clamp01(fillAmount);
-        _holdFillBar.color = isComplete ? _completeColor : _fillingColor;
+        _holdFillBar.color = _fillingColor;
+    }
+
+    void HideFillBar()
+    {
+        if (_holdFillBar != null)
+            _holdFillBar.enabled = false;
     }
 
     AnomalyMarker FindTarget()
