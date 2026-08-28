@@ -71,7 +71,7 @@ public class ElectricBoxActivationController : MonoBehaviour
             _hasTriggered = true;
             return 0f;
         }
-        Debug.Log($"Hold Timer: {_holdTimer}, Hold Duration: {_holdDuration}");
+        // Debug.Log($"Hold Timer: {_holdTimer}, Hold Duration: {_holdDuration}");
         return _holdTimer / _holdDuration;
     }
 
