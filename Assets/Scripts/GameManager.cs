@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     [SerializeField] Soundmanager soundManager;
+    [SerializeField] SFX sfxManager;
 
     public GameState CurrentState { get; private set; } = GameState.Menu;
     public GameplaySequence CurrentSequence { get; private set; } = GameplaySequence.Normal;
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
         }
         else if (newSequence == GameplaySequence.Penalty)
         {
+            sfxManager.PlayMusic("breaker");
             soundManager.ChangeMusic("Entity");
             soundManager.SongState(true);
         }
