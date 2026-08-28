@@ -3,6 +3,9 @@ using UnityEngine;
 public class HidingSpot : MonoBehaviour
 {
     [SerializeField] LEDColorSwitch _ledSwitch;
+    [SerializeField] Animator _doorAnimator;
+    [SerializeField] string _openTrigger = "Open";
+    [SerializeField] string _closeTrigger = "Close";
 
     public bool IsOpen { get; private set; }
 
@@ -12,6 +15,9 @@ public class HidingSpot : MonoBehaviour
 
         if (_ledSwitch != null)
             _ledSwitch.SetSecondColor(true);
+
+        if (_doorAnimator != null)
+            _doorAnimator.SetTrigger(_openTrigger);
     }
 
     public void Close()
@@ -20,5 +26,8 @@ public class HidingSpot : MonoBehaviour
 
         if (_ledSwitch != null)
             _ledSwitch.SetSecondColor(false);
+
+        if (_doorAnimator != null)
+            _doorAnimator.SetTrigger(_closeTrigger);
     }
 }

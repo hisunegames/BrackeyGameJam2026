@@ -10,6 +10,8 @@ TagManager:
   - NPCIndicator
   - Lights
   - Minimap
+  - MinimapCamera
+  - ElectricBox
   layers:
   - Default
   - TransparentFX

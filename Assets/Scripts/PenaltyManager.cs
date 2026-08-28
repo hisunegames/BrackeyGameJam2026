@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class PenaltyManager : MonoBehaviour
@@ -16,6 +17,9 @@ public class PenaltyManager : MonoBehaviour
 
     [Header("Timer")]
     [SerializeField] float _penaltyDuration = 30f;
+
+    [Header("Despawn")]
+    [SerializeField] float _monsterFadeDuration = 1f;
 
     public float RemainingTime { get; private set; }
     public static event Action<float> OnPenaltyTimerChanged;
@@ -119,8 +123,16 @@ public class PenaltyManager : MonoBehaviour
     {
         foreach (GameObject monster in _spawnedMonsters)
         {
-            if (monster != null)
-                Destroy(monster);
+            if (monster == null)
+                continue;
+
+            if (monster.TryGetComponent(out BillboardSprite billboard))
+                billboard.enabled = false;
+
+            foreach (SpriteRenderer spriteRenderer in monster.GetComponentsInChildren<SpriteRenderer>())
+                spriteRenderer.DOFade(0f, _monsterFadeDuration);
+
+            Destroy(monster, _monsterFadeDuration);
         }
         _spawnedMonsters.Clear();
     }

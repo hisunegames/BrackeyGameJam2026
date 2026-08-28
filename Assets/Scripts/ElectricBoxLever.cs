@@ -5,6 +5,7 @@ public class ElectricBoxLever : InteractableObject
     [SerializeField] LEDColorSwitch _ledSwitch;
     [SerializeField] Animator _leverAnimator;
     [SerializeField] string _leverOnTrigger = "SwitchOn";
+    [SerializeField] ElectricBoxSpriteSwap _indicatorSprite;
 
     public bool IsFixed { get; private set; }
     public bool IsAccessible { get; private set; }
@@ -25,6 +26,9 @@ public class ElectricBoxLever : InteractableObject
 
         if (_ledSwitch != null)
             _ledSwitch.SetSecondColor(true);
+
+        if (_indicatorSprite != null)
+            _indicatorSprite.SetOn();
 
         if (_leverAnimator != null)
             _leverAnimator.SetTrigger(_leverOnTrigger);

@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
 
     public float StaminaFraction => _currentStamina / _maxStamina;
     public bool IsCrouching => _isCrouching;
+    public bool IsTalking => _isTalking;
 
     private void Awake()
     {
