@@ -76,3 +76,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Baked NavMesh data - regenerable from Bake, and binary so it can't be merged
+# (repeated merge conflicts on these are what caused corrupted/duplicated
+# NavMesh-Floor*.asset files across scenes)
+NavMesh-*.asset
+NavMesh-*.asset.meta
