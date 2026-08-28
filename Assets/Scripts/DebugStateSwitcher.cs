@@ -21,6 +21,20 @@ public class DebugStateSwitcher : MonoBehaviour
             SetSequence(GameplaySequence.Penalty);
         else if (Keyboard.current.f7Key.wasPressedThisFrame)
             SetSequence(GameplaySequence.Chase);
+        else if (Keyboard.current.f8Key.wasPressedThisFrame)
+            ToggleElectricBoxes();
+    }
+
+    void ToggleElectricBoxes()
+    {
+        if (ElectricBoxSpawner.Instance == null)
+        {
+            Debug.Log("[DebugStateSwitcher] No ElectricBoxSpawner in scene");
+            return;
+        }
+
+        ElectricBoxSpawner.Instance.DebugToggleSpawnAll();
+        Debug.Log("[DebugStateSwitcher] Toggled all electric box spawn points");
     }
 
     void SetState(GameState state)

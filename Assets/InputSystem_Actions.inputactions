@@ -42,7 +42,7 @@
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "Press,Hold",
                     "initialStateCheck": false,
                     "priority": 0
                 },
@@ -72,7 +72,7 @@
                     "id": "2776c80d-3c14-4091-8c56-d04ced07a2b0",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold(duration=2)",
+                    "interactions": "Hold",
                     "initialStateCheck": false,
                     "priority": 0
                 },
