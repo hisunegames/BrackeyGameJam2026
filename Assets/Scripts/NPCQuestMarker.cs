@@ -14,5 +14,8 @@ public class NPCQuestMarker : MonoBehaviour
 
         if (QuestLog.IsQuestInStateMask(_questName, QuestState.Active))
             _marker.SetQuestMarked(true);
+
+        if (QuestLog.IsQuestInStateMask(_questName, QuestState.Success))
+            _marker.SetQuestMarked(false);
     }
 }

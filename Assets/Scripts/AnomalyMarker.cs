@@ -30,6 +30,7 @@ public class AnomalyMarker : MonoBehaviour
     {
         IsQuestMarked = questMarked;
         RefreshColor();
+        Debug.Log("Marked");
     }
 
     void RefreshColor()
