@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
@@ -68,12 +69,16 @@ public class PlayerController : MonoBehaviour
     bool _isTalking;
     Vector3 _handRestPosition;
     Tween _handShakeTween;
+    bool _isDead;
 
     public float StaminaFraction => _currentStamina / _maxStamina;
     public bool IsCrouching => _isCrouching;
     public Vector3 Motion { get; private set; }
     
     public bool IsTalking => _isTalking;
+    public bool IsDead => _isDead;
+
+    public static event Action OnPlayerDied;
 
     private void Awake()
     {
@@ -103,6 +108,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (_isDead)
+            return;
+
         // Get movement input and convert it to a 3D vector
         Vector2 moveInput = _moveInputAction.action.ReadValue<Vector2>();
         Vector3 moveInputIn3D = new Vector3(moveInput.x, 0, moveInput.y);
@@ -303,11 +311,69 @@ public class PlayerController : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
-        Debug.Log(_currentHealth.ToString());
+        if (_isDead)
+            return;
+
         _currentHealth -= damage;
         _healthRegenDelayTimer = _natRegenDelay;
-        if (_currentHealth < 0f)
-            Debug.Log("Game Over");
+        if (_currentHealth <= 0f)
+            Die();
+    }
+
+    public void Die()
+    {
+        if (_isDead)
+            return;
+
+        _isDead = true;
+        _currentHealth = 0f;
+        _isSprinting = false;
+        StopHandShake();
+        _sprintShake.AmplitudeGain = 0f;
+
+        OnPlayerDied?.Invoke();
+    }
+
+    public void ApplyBuff(BuffType type, float amount)
+    {
+        switch (type)
+        {
+            case BuffType.MoveSpeed:
+                _moveSpeed += amount;
+                break;
+            case BuffType.SprintSpeed:
+                _sprintSpeed += amount;
+                break;
+            case BuffType.MaxStamina:
+                _maxStamina += amount;
+                _currentStamina += amount;
+                break;
+            case BuffType.MaxHealth:
+                _maxHealth += amount;
+                _currentHealth += amount;
+                break;
+        }
+    }
+
+    public void RemoveBuff(BuffType type, float amount)
+    {
+        switch (type)
+        {
+            case BuffType.MoveSpeed:
+                _moveSpeed -= amount;
+                break;
+            case BuffType.SprintSpeed:
+                _sprintSpeed -= amount;
+                break;
+            case BuffType.MaxStamina:
+                _maxStamina -= amount;
+                _currentStamina = Mathf.Min(_currentStamina, _maxStamina);
+                break;
+            case BuffType.MaxHealth:
+                _maxHealth -= amount;
+                _currentHealth = Mathf.Min(_currentHealth, _maxHealth);
+                break;
+        }
     }
 
     // CharacterController doesn't push Rigidbodies on its own (and, having no Rigidbody itself,

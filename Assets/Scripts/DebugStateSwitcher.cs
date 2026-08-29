@@ -23,6 +23,8 @@ public class DebugStateSwitcher : MonoBehaviour
             SetSequence(GameplaySequence.Chase);
         else if (Keyboard.current.f8Key.wasPressedThisFrame)
             ToggleElectricBoxes();
+        else if (Keyboard.current.f9Key.wasPressedThisFrame)
+            ToggleNotepadPodiums();
     }
 
     void ToggleElectricBoxes()
@@ -35,6 +37,18 @@ public class DebugStateSwitcher : MonoBehaviour
 
         ElectricBoxSpawner.Instance.DebugToggleSpawnAll();
         Debug.Log("[DebugStateSwitcher] Toggled all electric box spawn points");
+    }
+
+    void ToggleNotepadPodiums()
+    {
+        if (NotepadPodiumSpawner.Instance == null)
+        {
+            Debug.Log("[DebugStateSwitcher] No NotepadPodiumSpawner in scene");
+            return;
+        }
+
+        NotepadPodiumSpawner.Instance.DebugToggleSpawnAll();
+        Debug.Log("[DebugStateSwitcher] Toggled all notepad podium spawn points");
     }
 
     void SetState(GameState state)

@@ -13,4 +13,4 @@ Brackeys Game Jam 2026
 For merge conflicts `git mergetool --tool=unityyamlmerge`
 
 Push large files to Git LFS: `git lfs push origin main`
-Fetch large files from Git LFS: `git lfs fetch origin main -all`
+Fetch large files from Git LFS: `git lfs fetch origin main --all`

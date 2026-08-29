@@ -12,6 +12,7 @@ TagManager:
   - Minimap
   - MinimapCamera
   - ElectricBox
+  - ShiftPodium
   layers:
   - Default
   - TransparentFX
