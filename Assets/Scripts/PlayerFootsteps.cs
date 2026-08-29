@@ -15,7 +15,7 @@ public class PlayerFootsteps : MonoBehaviour
     {
         while (true)
         {
-            float footstepPeriod = 0.35f;
+            float footstepPeriod = 0.50f;
             if (!playerController.IsCrouching && playerController.Motion.magnitude > 4.5f)
             {
                 footstepPeriod *= 5.0f / playerController.Motion.magnitude;
