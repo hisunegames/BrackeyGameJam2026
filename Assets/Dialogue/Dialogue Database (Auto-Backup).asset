@@ -1414,6 +1414,384 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+  - id: 15
+    fields:
+    - title: Name
+      value: TestReturnQuest
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: Return to NPC
+      type: 0
+      typeString: 
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 1
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Return to NPC
+      type: 0
+      typeString: 
+  - id: 16
+    fields:
+    - title: Name
+      value: BillionaireReturn
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: Billionaire's Quest
+      type: 0
+      typeString: 
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 1
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Return to the Billionaire
+      type: 0
+      typeString: 
+  - id: 17
+    fields:
+    - title: Name
+      value: CookingMamaReturn
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: Cooking Mom's Quest
+      type: 0
+      typeString: 
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 1
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Return to Cooking Mom
+      type: 0
+      typeString: 
+  - id: 18
+    fields:
+    - title: Name
+      value: BlindGuyReturn
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: Blind Guy's Quest
+      type: 0
+      typeString: 
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 1
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Return to the Blind Guy
+      type: 0
+      typeString: 
+  - id: 19
+    fields:
+    - title: Name
+      value: FemaleStudentReturn
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: Female Student's Quest
+      type: 0
+      typeString: 
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 1
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Return to the Female Student
+      type: 0
+      typeString: 
+  - id: 20
+    fields:
+    - title: Name
+      value: GlassesGirlReturn
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: Glasses Girl's Quest
+      type: 0
+      typeString: 
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 1
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Return to Glasses Girl
+      type: 0
+      typeString: 
+  - id: 21
+    fields:
+    - title: Name
+      value: ProfessorReturn
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: Professor's Quest
+      type: 0
+      typeString: 
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 1
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: Return to Professor
+      type: 0
+      typeString: 
   locations:
   - id: 1
     fields:
@@ -1760,7 +2138,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: Camera(Closeup,,1)
         type: 0
         typeString: 
       conversationID: 1
@@ -1993,7 +2371,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: SetActive(TestQuestItem, true)
         type: 0
         typeString: 
       conversationID: 1
@@ -2147,7 +2525,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetContinueMode(true)
+        value: 'SetContinueMode(true)
+
+          SetActive(QuestMark, false)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2165,7 +2545,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: Variable["TestItem.NumCollected"] == 1
-      userScript: 
+      userScript: SetQuestState("TestReturnQuest", "success")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3232,7 +3612,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(3)
+        value: 'Delay(3);
+
+          SetContinueMode(true)'
+        type: 0
+        typeString: 
+      - title: Response Menu Sequence
+        value: 
         type: 0
         typeString: 
       conversationID: 3
@@ -3287,7 +3673,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetContinueMode(true)
+        value: Delay(2)
         type: 0
         typeString: 
       conversationID: 3
@@ -3613,7 +3999,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(3)
+        value: Delay(2)
         type: 0
         typeString: 
       conversationID: 4
@@ -3884,9 +4270,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'SetContinueMode(false);
-
-          Delay(3)b '
+        value: ' '
         type: 0
         typeString: 
       conversationID: 5
@@ -3941,7 +4325,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(3)
+        value: 'SetContinueMode(false);
+
+          Delay(3)'
         type: 0
         typeString: 
       conversationID: 5
@@ -4210,7 +4596,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: "SetContinueMode(false)\u0E27\nDelay(3)"
+        value: 'SetContinueMode(false);
+
+          Delay(3)'
         type: 0
         typeString: 
       conversationID: 6
@@ -4228,8 +4616,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 160
-        y: 180
+        x: 159
+        y: 181
         width: 160
         height: 30
     entryGroups: []
@@ -4528,7 +4916,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(5)
+        value: 'Delay(5);
+
+          SetContinueMode(true)'
+        type: 0
+        typeString: 
+      - title: Response Menu Sequence
+        value: 
         type: 0
         typeString: 
       conversationID: 7
@@ -4584,9 +4978,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'Delay(5);
-
-          SetContinueMode(true)'
+        value: Delay(3)
         type: 0
         typeString: 
       conversationID: 7
@@ -4800,7 +5192,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(5)
+        value: 'Delay(4);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 8
@@ -4855,9 +5249,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'Delay(4);
-
-          SetContinueMode(true)'
+        value: Delay(3)
         type: 0
         typeString: 
       conversationID: 8
@@ -5075,7 +5467,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(3)
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 9
@@ -5130,7 +5524,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(3)
+        value: 'SetContinueMode(false);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 9
@@ -5287,7 +5683,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(3)
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 10
@@ -5342,7 +5740,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(2)
+        value: 'SetContinueMode(false);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 10
@@ -5498,7 +5898,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 11
@@ -5553,9 +5955,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'Delay(3);
-
-          SetContinueMode(true)'
+        value: Delay(2)
         type: 0
         typeString: 
       conversationID: 11
@@ -5823,7 +6223,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 12
@@ -5878,9 +6280,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'Delay(2);
-
-          SetContinueMode(true)'
+        value: Delay(1);
         type: 0
         typeString: 
       conversationID: 12
@@ -5905,7 +6305,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 160
-        y: 130
+        y: 129
         width: 160
         height: 30
     - id: 3
@@ -6047,7 +6447,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: "SetContinueMode(false)\u0E27\nDelay(6)"
+        value: 'SetContinueMode(false);
+
+          Delay(6)'
         type: 0
         typeString: 
       conversationID: 12
@@ -6264,7 +6666,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 14
@@ -6374,7 +6778,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 14
@@ -6698,7 +7104,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 15
@@ -6864,7 +7272,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(4)'
         type: 0
         typeString: 
       conversationID: 15
@@ -7188,7 +7598,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 16
@@ -7239,11 +7651,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: NEEE##333333333DD F000OOOO0000OOD 4444 MY## DAUGG&77#3EE3R
+        value: NEEE##333333333DD\, F000OOOO0000OOD\, 4444\, MY##\, DAUGG&77#3EE3R
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(4)'
         type: 0
         typeString: 
       conversationID: 16
@@ -7325,8 +7739,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 55
-        y: 218
+        x: 66
+        y: 196
         width: 160
         height: 30
     - id: 6
@@ -7374,8 +7788,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 265
-        y: 218
+        x: 276
+        y: 196
         width: 160
         height: 30
     - id: 7
@@ -7567,7 +7981,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 17
@@ -7673,12 +8089,14 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Err, judging from the way he pulls the ropes he might be hungry. Can
-          you find something for bro to eat?
+        value: Err, judging from the way he pulls the ropes he might be hungry.\.
+          Can you find something for bro to eat?
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(4)'
         type: 0
         typeString: 
       conversationID: 17
@@ -7840,7 +8258,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(2)
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 17
@@ -7895,7 +8315,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(1)'
         type: 0
         typeString: 
       conversationID: 17
@@ -8057,7 +8479,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 18
@@ -8167,7 +8591,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(1)'
         type: 0
         typeString: 
       conversationID: 18
@@ -8329,7 +8755,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 18
@@ -8384,7 +8812,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(1)'
         type: 0
         typeString: 
       conversationID: 18
@@ -8546,7 +8976,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 19
@@ -8657,7 +9089,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(3)'
         type: 0
         typeString: 
       conversationID: 19
@@ -8718,7 +9152,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 19
@@ -8773,7 +9209,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(1)'
         type: 0
         typeString: 
       conversationID: 19
@@ -9036,7 +9474,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 20
@@ -9203,7 +9643,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 20
@@ -9258,7 +9700,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 20
@@ -9465,7 +9909,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 20
@@ -9495,7 +9941,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 314
+        x: 313
         y: 284
         width: 160
         height: 30
@@ -9639,7 +10085,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 21
@@ -10080,7 +10528,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(1)'
         type: 0
         typeString: 
       conversationID: 21
@@ -10242,7 +10692,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 21
@@ -10407,7 +10859,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(1)'
         type: 0
         typeString: 
       conversationID: 21
@@ -10569,7 +11023,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 22
@@ -10679,7 +11135,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(4)
+        value: 'SetContinueMode(false);
+
+          Delay(4)'
         type: 0
         typeString: 
       conversationID: 22
@@ -10841,7 +11299,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 22
@@ -10896,7 +11356,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 22
@@ -11058,7 +11520,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(2);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 23
@@ -11168,7 +11632,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(2)'
         type: 0
         typeString: 
       conversationID: 23
@@ -11492,7 +11958,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 24
@@ -11547,7 +12015,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false);
+
+          Delay(3)'
         type: 0
         typeString: 
       conversationID: 24
@@ -12309,7 +12779,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 26
@@ -12333,8 +12805,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 288
-        y: 103
+        x: 296
+        y: 105
         width: 160
         height: 30
     - id: 2
@@ -12364,7 +12836,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetContinueMode(true)
+        value: 
         type: 0
         typeString: 
       conversationID: 26
@@ -12388,8 +12860,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 294
-        y: 170
+        x: 296
+        y: 163
         width: 160
         height: 30
     - id: 3
@@ -13056,8 +13528,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 288
-        y: 103
+        x: 294
+        y: 112
         width: 160
         height: 30
     - id: 2
@@ -13458,12 +13930,14 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Sorry to bring this up but bringing a sword is strictly forbidden.
+        value: Sorry to bring this up but bringing a sword is strictly forbidden.\.
           This thing will be with me until you leave the mall.
         type: 0
         typeString: 
       - title: Sequence
-        value: Delay(5)
+        value: 'Delay(4);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 28
@@ -13519,9 +13993,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'Delay(4);
-
-          SetContinueMode(true)'
+        value: Delay(4)
         type: 0
         typeString: 
       conversationID: 28
