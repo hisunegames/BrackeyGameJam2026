@@ -288,7 +288,7 @@ public class PlayerController : MonoBehaviour
             _currentHealth = Mathf.Min(_maxHealth, _currentHealth + _natRegenRate * Time.deltaTime);
 
         bool debounce = false;
-        if ((_currentHealth / _maxHealth) < _erythropsiaThreshold && debounce == false)
+        if ((_currentHealth / _maxHealth) <= _erythropsiaThreshold && debounce == false)
         {
             debounce = true;
             _redVignette.GetComponent<Image>().DOKill();
@@ -296,13 +296,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _redVignette.GetComponent<Image>().DOFade(0f, 0.2f);
+            _redVignette.GetComponent<Image>().DOFade(0f, 2f);
             debounce = false;
         }
             
     }
     public void TakeDamage(float damage)
     {
+        Debug.Log(_currentHealth.ToString());
         _currentHealth -= damage;
         _healthRegenDelayTimer = _natRegenDelay;
         if (_currentHealth < 0f)
