@@ -18,11 +18,6 @@ public class NPCManager : MonoBehaviour
 
     [Header("Spawn Settings")]
     [SerializeField] int _npcCount = 10;
-    [SerializeField] Transform _spawnCenter;
-    [SerializeField] float _spawnRadiusX = 10f;
-    [SerializeField] float _spawnRadiusZ = 6f;
-
-    Vector3 SpawnCenter => _spawnCenter != null ? _spawnCenter.position : transform.position;
 
     void Start()
     {
@@ -39,7 +34,7 @@ public class NPCManager : MonoBehaviour
             ? variant.anomalyPrefab
             : variant.prefab;
 
-        if (!NavMeshSpawner.TryGetRandomPointInEllipse(SpawnCenter, _spawnRadiusX, _spawnRadiusZ, out Vector3 point))
+        if (NPCBounds.Instance == null || !NavMeshSpawner.TryGetRandomPointInPolygon(NPCBounds.Instance.Center, NPCBounds.Instance.Polygon, out Vector3 point))
             return;
 
         Instantiate(prefab, point, Quaternion.identity);
@@ -71,21 +66,5 @@ public class NPCManager : MonoBehaviour
 
         variant = _npcVariants[_npcVariants.Length - 1];
         return true;
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.cyan;
-
-        const int segments = 48;
-        Vector3 center = SpawnCenter;
-        Vector3 prevPoint = center + new Vector3(_spawnRadiusX, 0f, 0f);
-        for (int i = 1; i <= segments; i++)
-        {
-            float angle = i / (float)segments * Mathf.PI * 2f;
-            Vector3 point = center + new Vector3(Mathf.Cos(angle) * _spawnRadiusX, 0f, Mathf.Sin(angle) * _spawnRadiusZ);
-            Gizmos.DrawLine(prevPoint, point);
-            prevPoint = point;
-        }
     }
 }

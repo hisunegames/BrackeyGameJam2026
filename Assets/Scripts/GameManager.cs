@@ -8,14 +8,26 @@ public enum GameState
     Pause
 }
 
+public enum GameplaySequence
+{
+    Normal,
+    Penalty,
+    Chase
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     [SerializeField] Soundmanager soundManager;
+    [SerializeField] SFX sfxManager;
+
+    bool debounce = false;
 
     public GameState CurrentState { get; private set; } = GameState.Menu;
+    public GameplaySequence CurrentSequence { get; private set; } = GameplaySequence.Normal;
 
     public static event Action<GameState> OnStateChanged;
+    public static event Action<GameplaySequence> OnSequenceChanged;
 
     void Awake()
     {
@@ -45,9 +57,44 @@ public class GameManager : MonoBehaviour
         OnStateChanged?.Invoke(newState);
     }
 
+    public void SetSequence(GameplaySequence newSequence)
+    {
+        if (CurrentSequence == newSequence)
+            return;
+
+        CurrentSequence = newSequence;
+
+        if (newSequence == GameplaySequence.Chase)
+        {
+            soundManager.ChangeMusic("Chase");
+            soundManager.SongState(true);
+        }
+        else if (newSequence == GameplaySequence.Normal)
+        {
+            soundManager.ChangeMusic("Ambience");
+            soundManager.SongState(true);
+            debounce = false;
+        }
+        else if (newSequence == GameplaySequence.Penalty)
+        {
+            if (debounce == false)
+            {
+                sfxManager.PlayMusic("breaker");
+                debounce = true;
+            }
+            
+            soundManager.ChangeMusic("Entity");
+            soundManager.SongState(true);
+        }
+
+
+        OnSequenceChanged?.Invoke(newSequence);
+    }
+
     public void StartGame()
     {
         SetState(GameState.Gameplay);
+        SetSequence(GameplaySequence.Normal);
         soundManager.ChangeMusic("Ambience");
     }
 

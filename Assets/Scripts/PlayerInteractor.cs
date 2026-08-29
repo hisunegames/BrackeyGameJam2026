@@ -41,7 +41,8 @@ public class PlayerInteractor : MonoBehaviour
     IInteractable FindTarget()
     {
         if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _interactRange, _interactableLayers, QueryTriggerInteraction.Collide)
-            && hit.collider.TryGetComponent(out IInteractable interactable))
+            && hit.collider.TryGetComponent(out IInteractable interactable)
+            && interactable.CanInteract)
         {
             return interactable;
         }

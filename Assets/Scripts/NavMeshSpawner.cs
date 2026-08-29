@@ -33,4 +33,82 @@ public static class NavMeshSpawner
         result = Vector3.zero;
         return false;
     }
+
+    public static bool TryGetRandomPointInPolygon(Vector3 center, Vector2[] polygonOffsets, out Vector3 result, int maxAttempts = 30)
+    {
+        if (polygonOffsets == null || polygonOffsets.Length < 3)
+        {
+            result = Vector3.zero;
+            return false;
+        }
+
+        Vector2 min = polygonOffsets[0];
+        Vector2 max = polygonOffsets[0];
+        foreach (Vector2 point in polygonOffsets)
+        {
+            min = Vector2.Min(min, point);
+            max = Vector2.Max(max, point);
+        }
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            Vector2 randomOffset = new Vector2(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
+            if (!IsPointInPolygon(randomOffset, polygonOffsets))
+                continue;
+
+            Vector3 worldPoint = center + new Vector3(randomOffset.x, 0f, randomOffset.y);
+            if (NavMesh.SamplePosition(worldPoint, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+
+        result = Vector3.zero;
+        return false;
+    }
+
+    public static bool TryGetRandomPointInRadiusWithinPolygon(Vector3 selfPosition, float radius, Vector3 polygonCenter, Vector2[] polygonOffsets, out Vector3 result, int maxAttempts = 30)
+    {
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            float angle = Random.value * Mathf.PI * 2f;
+            float distance = Mathf.Sqrt(Random.value) * radius;
+            Vector3 candidate = selfPosition + new Vector3(Mathf.Cos(angle) * distance, 0f, Mathf.Sin(angle) * distance);
+
+            if (polygonOffsets != null && polygonOffsets.Length >= 3)
+            {
+                Vector2 offset = new Vector2(candidate.x - polygonCenter.x, candidate.z - polygonCenter.z);
+                if (!IsPointInPolygon(offset, polygonOffsets))
+                    continue;
+            }
+
+            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, radius, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+
+        result = Vector3.zero;
+        return false;
+    }
+
+    static bool IsPointInPolygon(Vector2 point, Vector2[] polygon)
+    {
+        bool inside = false;
+        int j = polygon.Length - 1;
+        for (int i = 0; i < polygon.Length; i++)
+        {
+            Vector2 pi = polygon[i];
+            Vector2 pj = polygon[j];
+            if ((pi.y > point.y) != (pj.y > point.y) &&
+                point.x < (pj.x - pi.x) * (point.y - pi.y) / (pj.y - pi.y) + pi.x)
+            {
+                inside = !inside;
+            }
+            j = i;
+        }
+        return inside;
+    }
 }
