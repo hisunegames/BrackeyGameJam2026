@@ -71,6 +71,8 @@ public class PlayerController : MonoBehaviour
 
     public float StaminaFraction => _currentStamina / _maxStamina;
     public bool IsCrouching => _isCrouching;
+    public Vector3 Motion { get; private set; }
+    
     public bool IsTalking => _isTalking;
 
     private void Awake()
@@ -121,6 +123,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 motion = moveDirection * speed;
         motion.y = _verticalVelocity;
+        Motion = motion;
         _controller.Move(motion * Time.deltaTime + Vector3.up * (crouchHeightDelta / 2f));
 
         // Display Player Stamina
