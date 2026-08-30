@@ -13,9 +13,8 @@
 *.prefab text
 *.mat text
 *.asset text
-
 *.unity merge=unityyamlmerge
 *.prefab merge=unityyamlmerge
-
 *.unity filter=lfs diff=lfs merge=lfs -text lockable
 *.prefab filter=lfs diff=lfs merge=lfs -text lockable
+*.blend filter=lfs diff=lfs merge=lfs -text
