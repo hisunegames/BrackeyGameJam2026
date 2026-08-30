@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     [SerializeField] Soundmanager soundManager;
     [SerializeField] SFX sfxManager;
+    [SerializeField] ShiftManager shiftManager;
 
     bool debounce = false;
 
@@ -71,7 +72,12 @@ public class GameManager : MonoBehaviour
         }
         else if (newSequence == GameplaySequence.Normal)
         {
-            soundManager.ChangeMusic("Ambience");
+            if (shiftManager.RemainingShiftTime <= 150f)
+            {
+                soundManager.ChangeMusic("Task");
+            }
+            else
+                soundManager.ChangeMusic("Ambience");
             soundManager.SongState(true);
             debounce = false;
         }
