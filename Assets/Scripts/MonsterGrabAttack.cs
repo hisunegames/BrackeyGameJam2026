@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,6 +15,8 @@ public class MonsterGrabAttack : MonoBehaviour
 
     [Header("Placeholder Cutscene")]
     [SerializeField] float _cutsceneDuration = 1.5f;
+    [SerializeField] CinemachineCamera _grabCamera;
+    [SerializeField] int _grabCameraPriority = 20;
 
     bool _hasGrabbed;
 
@@ -44,6 +47,17 @@ public class MonsterGrabAttack : MonoBehaviour
     {
         if (_agent != null)
             _agent.isStopped = true;
+
+        // Locks the camera for the rest of the cutscene - no need to unlock it after, since
+        // Die() freezes the player permanently anyway.
+        PlayerLook playerLook = player.GetComponent<PlayerLook>();
+        if (playerLook != null)
+            playerLook.SetLookEnabled(false);
+
+        // Raising priority above the player's vcam (which sits at the default/disabled 0) is
+        // enough for CinemachineBrain to blend over automatically - no manual camera swap needed.
+        if (_grabCamera != null)
+            _grabCamera.Priority = _grabCameraPriority;
 
         if (_animator != null)
             _animator.SetTrigger(_grabTrigger);

@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         }
         else if (newSequence == GameplaySequence.Normal)
         {
-            if (shiftManager.RemainingShiftTime <= 150f)
+            if (shiftManager != null && shiftManager.RemainingShiftTime <= 150f)
             {
                 soundManager.ChangeMusic("Task");
             }
