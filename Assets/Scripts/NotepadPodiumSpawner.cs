@@ -127,6 +127,29 @@ public class NotepadPodiumSpawner : MonoBehaviour
             notes.Add(identity.AssociatedNote);
     }
 
+    // Debug only - re-collects the day's notes and re-injects them into whatever podiums are
+    // already spawned, without respawning them. Needed because SetNotes() only runs once at
+    // spawn time, so a debug pool-fill (e.g. F12) done afterward wouldn't otherwise reach them.
+    public void DebugRefreshNotes()
+    {
+        int podiumCount = _spawnedNotepads.Count;
+        if (podiumCount == 0)
+            return;
+
+        List<NoteData> notes = CollectDayNotes();
+        List<NoteData>[] buckets = SplitNotes(notes, podiumCount);
+
+        for (int i = 0; i < podiumCount; i++)
+        {
+            if (_spawnedNotepads[i] == null)
+                continue;
+
+            NotepadHandler handler = _spawnedNotepads[i].GetComponentInChildren<NotepadHandler>();
+            if (handler != null)
+                handler.SetNotes(buckets[i].ToArray());
+        }
+    }
+
     void DespawnAll()
     {
         foreach (GameObject podium in _spawnedNotepads)

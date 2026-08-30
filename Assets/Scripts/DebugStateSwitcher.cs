@@ -25,6 +25,12 @@ public class DebugStateSwitcher : MonoBehaviour
             ToggleElectricBoxes();
         else if (Keyboard.current.f9Key.wasPressedThisFrame)
             ToggleNotepadPodiums();
+        else if (Keyboard.current.f10Key.wasPressedThisFrame)
+            ToggleHidingSpots();
+        else if (Keyboard.current.f11Key.wasPressedThisFrame)
+            ForceCanClockOut();
+        else if (Keyboard.current.f12Key.wasPressedThisFrame)
+            FillQuestPoolWithPlaceholders();
     }
 
     void ToggleElectricBoxes()
@@ -49,6 +55,50 @@ public class DebugStateSwitcher : MonoBehaviour
 
         NotepadPodiumSpawner.Instance.DebugToggleSpawnAll();
         Debug.Log("[DebugStateSwitcher] Toggled all notepad podium spawn points");
+    }
+
+    void ToggleHidingSpots()
+    {
+        if (HidingSpotManager.Instance == null)
+        {
+            Debug.Log("[DebugStateSwitcher] No HidingSpotManager in scene");
+            return;
+        }
+
+        HidingSpotManager.Instance.DebugToggleAllSpots();
+        Debug.Log("[DebugStateSwitcher] Toggled all hiding spot doors");
+    }
+
+    void ForceCanClockOut()
+    {
+        if (ShiftManager.Instance == null)
+        {
+            Debug.Log("[DebugStateSwitcher] No ShiftManager in scene");
+            return;
+        }
+
+        ShiftManager.Instance.DebugForceCanClockOut();
+        Debug.Log("[DebugStateSwitcher] Forced CanClockOut = true");
+    }
+
+    void FillQuestPoolWithPlaceholders()
+    {
+        if (NPCQuestPoolManager.Instance == null)
+        {
+            Debug.Log("[DebugStateSwitcher] No NPCQuestPoolManager in scene");
+            return;
+        }
+
+        NPCQuestPoolManager.Instance.DebugFillWithPlaceholders();
+        Debug.Log("[DebugStateSwitcher] Filled quest pool with placeholder quest givers");
+
+        // Podiums that already spawned this day cached their notes at spawn time (before this
+        // pool fill happened) - push the refreshed pool into them too, or they'd stay empty.
+        if (NotepadPodiumSpawner.Instance != null)
+        {
+            NotepadPodiumSpawner.Instance.DebugRefreshNotes();
+            Debug.Log("[DebugStateSwitcher] Refreshed notes on already-spawned podiums");
+        }
     }
 
     void SetState(GameState state)

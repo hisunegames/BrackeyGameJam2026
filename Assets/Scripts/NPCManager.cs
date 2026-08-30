@@ -93,7 +93,10 @@ public class NPCManager : MonoBehaviour
         _spawnedNpcs.Add(npc);
 
         if (npc.TryGetComponent(out NPCIdentity identity))
+        {
+            identity.SetCharacterId(prefab.name);
             identity.SetIsAnomaly(isAnomaly);
+        }
 
         if (NPCQuestPoolManager.Instance == null)
             return;

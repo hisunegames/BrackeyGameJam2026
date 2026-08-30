@@ -15,6 +15,7 @@ public class NotepadUIManager : MonoBehaviour
     [SerializeField] GameObject _cyclePrompt;
 
     NoteData[] _notes;
+    string[] _displayTexts;
     int _pageIndex;
 
     public bool IsOpen => _notepadPanel != null && _notepadPanel.activeSelf;
@@ -37,6 +38,13 @@ public class NotepadUIManager : MonoBehaviour
 
         _notes = notes;
         _pageIndex = 0;
+
+        // Computed once per open, not per page-view, so cycling back to a page never
+        // re-randomizes where its keywords landed in the flavor text.
+        _displayTexts = new string[notes.Length];
+        for (int i = 0; i < notes.Length; i++)
+            _displayTexts[i] = notes[i] != null ? notes[i].GetDisplayText() : string.Empty;
+
         _notepadPanel.SetActive(true);
         ShowPage();
     }
@@ -77,7 +85,7 @@ public class NotepadUIManager : MonoBehaviour
             return;
 
         _titleText.text = note.Title;
-        _noteText.SetText(note.GetDisplayText());
+        _noteText.SetText(_displayTexts[_pageIndex]);
 
         if (_pageIndicatorText != null)
             _pageIndicatorText.text = $"{_pageIndex + 1}/{_notes.Length}";

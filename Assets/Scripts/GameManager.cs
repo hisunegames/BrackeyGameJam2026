@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
         SetState(GameState.Gameplay);
         SetSequence(GameplaySequence.Normal);
         soundManager.ChangeMusic("Ambience");
+        soundManager.SongState(true);
     }
 
     public void PauseGame()
@@ -112,7 +113,7 @@ public class GameManager : MonoBehaviour
         if (CurrentState == GameState.Pause)
         {
             SetState(GameState.Gameplay);
-            soundManager.SongState(false);
+            soundManager.SongState(true);
         }
     }
 
@@ -120,5 +121,6 @@ public class GameManager : MonoBehaviour
     {
         SetState(GameState.Menu);
         soundManager.ChangeMusic("Menu");
+        soundManager.SongState(true);
     }
 }

@@ -67,16 +67,22 @@ public class ShiftManager : MonoBehaviour
 
     bool AreMainQuestsComplete()
     {
+        bool hasAnyQuest = false;
+
         foreach (string questName in _mainQuestNames)
         {
             if (string.IsNullOrEmpty(questName))
                 continue;
 
+            hasAnyQuest = true;
+
             if (!QuestLog.IsQuestInStateMask(questName, QuestState.Success))
                 return false;
         }
 
-        return true;
+        // With zero quest names configured, this must NOT vacuously report "complete" -
+        // that would flip CanClockOut true on day 1's first frame and freeze the timer forever.
+        return hasAnyQuest;
     }
 
     void SetCanClockOut(bool canClockOut)
@@ -86,6 +92,13 @@ public class ShiftManager : MonoBehaviour
 
         CanClockOut = canClockOut;
         OnCanClockOutChanged?.Invoke();
+    }
+
+    // Debug only - skips waiting on the timer/quests so the clock-out door/day-advance flow
+    // can be tested on its own.
+    public void DebugForceCanClockOut()
+    {
+        SetCanClockOut(true);
     }
 
     // Call this from whatever "clock out" door/GameObject the player interacts with.

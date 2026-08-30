@@ -1,59 +1,75 @@
 using DG.Tweening;
 using UnityEngine;
 
+public enum HidingSpotState
+{
+    Closed,
+    SemiOpen,
+    Open
+}
+
+// Doors must be pivoted at their top-center for this to look right - scaling Z around a
+// top pivot keeps the top fixed while the bottom edge grows down (closed) or shrinks up (open).
 public class HidingSpot : MonoBehaviour
 {
     [SerializeField] LEDColorSwitch _ledSwitch;
     [SerializeField] Transform[] _doors;
-    [SerializeField] float _doorOpenHeight = 3f;
     [SerializeField] float _doorMoveDuration = 1f;
 
-    public bool IsOpen { get; private set; }
+    public HidingSpotState State { get; private set; } = HidingSpotState.Closed;
+    public bool IsOpen => State == HidingSpotState.Open;
 
-    Vector3[] _closedLocalPositions;
+    float[] _closedScalesZ;
 
     void Awake()
     {
-        _closedLocalPositions = new Vector3[_doors.Length];
+        _closedScalesZ = new float[_doors.Length];
         for (int i = 0; i < _doors.Length; i++)
         {
             if (_doors[i] != null)
-                _closedLocalPositions[i] = _doors[i].localPosition;
+                _closedScalesZ[i] = _doors[i].localScale.z;
         }
     }
 
     public void Open()
     {
-        IsOpen = true;
+        State = HidingSpotState.Open;
+        SetLed(true);
+        TweenDoorsTo(i => 0.0001f);
+    }
 
-        if (_ledSwitch != null)
-            _ledSwitch.SetSecondColor(true);
-
-        for (int i = 0; i < _doors.Length; i++)
-        {
-            if (_doors[i] == null)
-                continue;
-
-            Vector3 openPosition = _closedLocalPositions[i] + Vector3.up * _doorOpenHeight;
-            _doors[i].DOKill();
-            _doors[i].DOLocalMove(openPosition, _doorMoveDuration);
-        }
+    // Doors only crack open enough for the player to crouch/crawl through - used for the
+    // limited hiding spots during Penalty, as opposed to fully Open (freely walkable).
+    // openFraction is owned by HidingSpotManager so it's tuned globally, not per-door.
+    public void SemiOpen(float openFraction)
+    {
+        State = HidingSpotState.SemiOpen;
+        SetLed(true);
+        TweenDoorsTo(i => _closedScalesZ[i] * openFraction);
     }
 
     public void Close()
     {
-        IsOpen = false;
+        State = HidingSpotState.Closed;
+        SetLed(false);
+        TweenDoorsTo(i => _closedScalesZ[i]);
+    }
 
+    void SetLed(bool on)
+    {
         if (_ledSwitch != null)
-            _ledSwitch.SetSecondColor(false);
+            _ledSwitch.SetSecondColor(on);
+    }
 
+    void TweenDoorsTo(System.Func<int, float> targetScaleZFor)
+    {
         for (int i = 0; i < _doors.Length; i++)
         {
             if (_doors[i] == null)
                 continue;
 
             _doors[i].DOKill();
-            _doors[i].DOLocalMove(_closedLocalPositions[i], _doorMoveDuration);
+            _doors[i].DOScaleZ(targetScaleZFor(i), _doorMoveDuration);
         }
     }
 }

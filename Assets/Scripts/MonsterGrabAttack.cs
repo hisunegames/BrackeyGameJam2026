@@ -28,7 +28,11 @@ public class MonsterGrabAttack : MonoBehaviour
         if (_hasGrabbed || !other.CompareTag("Player"))
             return;
 
-        PlayerController player = _playerController != null ? _playerController : other.GetComponentInParent<PlayerController>();
+        // Prefer whatever actually touched us - the pre-assigned _playerController field can be
+        // a stale cross-prefab reference rather than the live scene instance.
+        PlayerController player = other.GetComponentInParent<PlayerController>();
+        if (player == null)
+            player = _playerController;
         if (player == null || player.IsDead)
             return;
 

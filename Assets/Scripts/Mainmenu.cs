@@ -44,6 +44,9 @@ public class Mainmenu : MonoBehaviour
         Time.timeScale = 1f;
         mainmenuCanvasgroup.alpha = 0f;
         mainMenuPanel.SetActive(false);
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.StartGame();
     }
 
     public void QuitGame()

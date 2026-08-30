@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
     Vector3 _handRestPosition;
     Tween _handShakeTween;
     bool _isDead;
+    Vector3 _lastGroundedPosition;
 
     public float StaminaFraction => _currentStamina / _maxStamina;
     public bool IsCrouching => _isCrouching;
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _standingHeight = _controller.height;
         _currentStamina = _maxStamina;
+        _currentHealth = _maxHealth;
 
         if (_playerHand != null)
             _handRestPosition = _playerHand.transform.localPosition;
@@ -148,6 +150,8 @@ public class PlayerController : MonoBehaviour
 
             if (!_isCrouching && _jumpInputAction.action.WasPerformedThisFrame())
                 _verticalVelocity = _jumpForce;
+
+            _lastGroundedPosition = transform.position;
         }
         else
         {
@@ -155,28 +159,48 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Called by a fall-through safety volume placed below the map.
+    public void TeleportToLastGrounded()
+    {
+        TeleportTo(_lastGroundedPosition);
+    }
+
+    public void TeleportTo(Vector3 position)
+    {
+        _controller.enabled = false;
+        transform.position = position;
+        _verticalVelocity = 0f;
+        _controller.enabled = true;
+    }
+
     float HandleSprint(bool isMoving)
     {
         bool wasSprinting = _isSprinting;
         bool wantsSprint = !_isTalking && isMoving && !_isCrouching && _currentStamina > 0f && _sprintInputAction.action.IsPressed();
         float t = 1f - Mathf.Clamp01((_currentStamina / _maxStamina) / _staminaRedThreshold);
-        _staminaBar.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, t);
-        Color barColor = Color.Lerp(Color.white, Color.red, t);
-        barColor.a = _staminaBar.GetComponent<Image>().color.a;
-        _staminaBar.GetComponent<Image>().color = barColor;
-        _staminaBar.transform.localScale = new Vector2(_currentStamina / _maxStamina, 1f);
 
-        bool debounce = false;
-        if ((_currentStamina / _maxStamina) < _asthmaThreshold && debounce == false)
+        if (_staminaBar != null)
         {
-            _blackVignette.GetComponent<Image>().DOKill();
-            _blackVignette.GetComponent<Image>().DOFade(1f, 0.2f);
-            debounce = true;
+            Color barColor = Color.Lerp(Color.white, Color.red, t);
+            barColor.a = _staminaBar.GetComponent<Image>().color.a;
+            _staminaBar.GetComponent<Image>().color = barColor;
+            _staminaBar.transform.localScale = new Vector2(_currentStamina / _maxStamina, 1f);
         }
-        else
+
+        if (_blackVignette != null)
         {
-            _blackVignette.GetComponent<Image>().DOFade(0f, 0.2f);
-            debounce = false;
+            bool debounce = false;
+            if ((_currentStamina / _maxStamina) < _asthmaThreshold && debounce == false)
+            {
+                _blackVignette.GetComponent<Image>().DOKill();
+                _blackVignette.GetComponent<Image>().DOFade(1f, 0.2f);
+                debounce = true;
+            }
+            else
+            {
+                _blackVignette.GetComponent<Image>().DOFade(0f, 0.2f);
+                debounce = false;
+            }
         }
 
         if (wantsSprint)
@@ -186,23 +210,28 @@ public class PlayerController : MonoBehaviour
 
             _regenDelayTimer = _staminaRegenDelay;
             _staminaBarDelayTimer = _staminaBarDisappearDelay;
-            if (_staminaBackground.GetComponent<Image>().color.a == 0)
+            if (_staminaBackground != null && _staminaBar != null)
             {
-                _staminaBackground.GetComponent<Image>().DOFade(1f, 0.05f);
-                _staminaBar.GetComponent<Image>().DOFade(1f, 0.05f);
+                if (_staminaBackground.GetComponent<Image>().color.a == 0)
+                {
+                    _staminaBackground.GetComponent<Image>().DOFade(1f, 0.05f);
+                    _staminaBar.GetComponent<Image>().DOFade(1f, 0.05f);
+                }
+                else
+                {
+                    _staminaBackground.GetComponent<Image>().DOKill();
+                    _staminaBar.GetComponent<Image>().DOKill();
+                    Color _staminaBackgroundColor = _staminaBackground.GetComponent<Image>().color;
+                    _staminaBackgroundColor.a = 1;
+                    _staminaBackground.GetComponent<Image>().color = _staminaBackgroundColor;
+                    Color _staminaBarColor = _staminaBar.GetComponent<Image>().color;
+                    _staminaBarColor.a = 1;
+                    _staminaBar.GetComponent<Image>().color = _staminaBarColor;
+                }
             }
-            else
-            {
-                _staminaBackground.GetComponent<Image>().DOKill();
-                _staminaBar.GetComponent<Image>().DOKill();
-                Color _staminaBackgroundColor = _staminaBackground.GetComponent<Image>().color;
-                _staminaBackgroundColor.a = 1;
-                _staminaBackground.GetComponent<Image>().color = _staminaBackgroundColor;
-                Color _staminaBarColor = _staminaBar.GetComponent<Image>().color;
-                _staminaBarColor.a = 1;
-                _staminaBar.GetComponent<Image>().color = _staminaBarColor;
-            }
-            _playerHand.transform.DOScale(new Vector3(0.22f, 0.22f, 0.22f), 0.2f);
+
+            if (_playerHand != null)
+                _playerHand.transform.DOScale(new Vector3(0.22f, 0.22f, 0.22f), 0.2f);
 
             if (!wasSprinting)
                 StartHandShake();
@@ -210,7 +239,9 @@ public class PlayerController : MonoBehaviour
         else
         {
             _isSprinting = false;
-            _playerHand.transform.DOScale(new Vector3(0.23f, 0.23f, 0.23f), 0.2f);
+
+            if (_playerHand != null)
+                _playerHand.transform.DOScale(new Vector3(0.23f, 0.23f, 0.23f), 0.2f);
 
             if (wasSprinting)
                 StopHandShake();
@@ -222,7 +253,7 @@ public class PlayerController : MonoBehaviour
 
             if (_staminaBarDelayTimer > 0f)
                 _staminaBarDelayTimer -= Time.deltaTime;
-            else
+            else if (_staminaBar != null && _staminaBackground != null)
             {
                 _staminaBar.GetComponent<Image>().DOFade(0f, 1f);
                 _staminaBackground.GetComponent<Image>().DOFade(0f, 1f);
@@ -331,6 +362,7 @@ public class PlayerController : MonoBehaviour
         StopHandShake();
         _sprintShake.AmplitudeGain = 0f;
 
+        Debug.Log("[PlayerController] Player died - no Game Over screen yet, this is a placeholder");
         OnPlayerDied?.Invoke();
     }
 

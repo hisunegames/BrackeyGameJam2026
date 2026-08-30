@@ -47,14 +47,23 @@ public class PlayerLook : MonoBehaviour
 
     void HandleCursorToggle()
     {
+        bool canLook = GameManager.Instance == null || GameManager.Instance.CurrentState == GameState.Gameplay;
+
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             SetCursorLocked(false);
         }
-        else if (_lockCursor && !_cursorLocked && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        else if (canLook && _lockCursor && !_cursorLocked && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             SetCursorLocked(true);
         }
+    }
+
+    // Called by Pausegame (and anything else that needs to take over the cursor) so this
+    // script's own cursor-locked state stays in sync instead of fighting over Cursor directly.
+    public void SetLookEnabled(bool enabled)
+    {
+        SetCursorLocked(enabled && _lockCursor);
     }
 
     void SetCursorLocked(bool locked)

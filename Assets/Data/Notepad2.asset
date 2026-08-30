@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0c77a1488b89c49a4865f16284d097, type: 3}
   m_Name: Notepad2
   m_EditorClassIdentifier: Assembly-CSharp::NoteData
-  _title: Security Log 2
+  _title: Awaiting
   _noteText: '11/Sep/2XXX
 
     The (Objective) that needs to be fit in the (box/goal)
     is (Real Objective Item)'
   _keywords:
-  - Gucci Bag
+  - Something
+  _keywordBlinkFrequency: 1
+  _conversationName: 

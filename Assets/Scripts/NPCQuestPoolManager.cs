@@ -83,11 +83,27 @@ public class NPCQuestPoolManager : MonoBehaviour
 
     bool TryPickUnassignedNpc(out GameObject npc)
     {
+        HashSet<string> activeCharacterIds = new();
+        foreach (GameObject active in _activeQuestGivers)
+        {
+            if (active != null && active.TryGetComponent(out NPCIdentity activeIdentity) && !string.IsNullOrEmpty(activeIdentity.CharacterId))
+                activeCharacterIds.Add(activeIdentity.CharacterId);
+        }
+
         List<GameObject> candidates = new();
         foreach (GameObject candidate in _normalPool)
         {
-            if (candidate != null && !_activeQuestGivers.Contains(candidate))
-                candidates.Add(candidate);
+            if (candidate == null || _activeQuestGivers.Contains(candidate))
+                continue;
+
+            // Skip duplicate spawns of an NPC that's already a quest giver - two active copies
+            // of the "same" character showing different note variants is confusing, not a decoy.
+            if (candidate.TryGetComponent(out NPCIdentity candidateIdentity)
+                && !string.IsNullOrEmpty(candidateIdentity.CharacterId)
+                && activeCharacterIds.Contains(candidateIdentity.CharacterId))
+                continue;
+
+            candidates.Add(candidate);
         }
 
         if (candidates.Count == 0)
@@ -111,5 +127,26 @@ public class NPCQuestPoolManager : MonoBehaviour
             state.ClearQuestGiver();
 
         FillEmptySlots();
+    }
+
+    // Debug only - fills the questable slots from whatever NPCs are available using placeholder
+    // quest names, bypassing ShiftManager.MainQuestNames entirely. For testing the pool/notepad
+    // pipeline before real Dialogue System quests exist on the questable NPCs.
+    public void DebugFillWithPlaceholders()
+    {
+        _normalPool.RemoveAll(npc => npc == null);
+
+        int placeholderIndex = _activeQuestGivers.Count;
+        while (_activeQuestGivers.Count < _maxActiveQuestGivers)
+        {
+            if (!TryPickUnassignedNpc(out GameObject npc))
+                break;
+
+            placeholderIndex++;
+            _activeQuestGivers.Add(npc);
+
+            if (npc.TryGetComponent(out NPCQuestGiverState state))
+                state.SetQuestGiver($"DebugQuest{placeholderIndex}", false);
+        }
     }
 }
