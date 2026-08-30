@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
@@ -55,6 +56,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject _redVignette;
     [SerializeField] float _asthmaThreshold;
     [SerializeField] float _erythropsiaThreshold;
+    [SerializeField] GameObject blackScreen;
+    [SerializeField] GameObject gameoverScreen;
 
     CharacterController _controller;
     float _standingHeight;
@@ -359,11 +362,23 @@ public class PlayerController : MonoBehaviour
         _isDead = true;
         _currentHealth = 0f;
         _isSprinting = false;
+        _playerHand.SetActive(false);
+
         StopHandShake();
         _sprintShake.AmplitudeGain = 0f;
 
-        Debug.Log("[PlayerController] Player died - no Game Over screen yet, this is a placeholder");
+        //Debug.Log("[PlayerController] Player died - no Game Over screen yet, this is a placeholder");
+        StartCoroutine(ShowBlackThenGameOver());
         OnPlayerDied?.Invoke();
+    }
+
+    IEnumerator ShowBlackThenGameOver()
+    {
+        yield return new WaitForSeconds(2f);
+        blackScreen.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        gameoverScreen.SetActive(true);
+        blackScreen.SetActive(false);
     }
 
     public void ApplyBuff(BuffType type, float amount)

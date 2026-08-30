@@ -48,6 +48,15 @@ public class MonsterGrabAttack : MonoBehaviour
         if (_agent != null)
             _agent.isStopped = true;
 
+        player.Die();
+        
+        Renderer[] playerrenderer = player.GetComponentsInChildren<Renderer>();
+
+        foreach(Renderer x in playerrenderer)
+        {
+            x.enabled = false;
+        }
+
         // Locks the camera for the rest of the cutscene - no need to unlock it after, since
         // Die() freezes the player permanently anyway.
         PlayerLook playerLook = player.GetComponent<PlayerLook>();
@@ -68,6 +77,5 @@ public class MonsterGrabAttack : MonoBehaviour
         // Placeholder beat before the kill lands - swap this wait for a real grab/scream cutscene later.
         yield return new WaitForSeconds(_cutsceneDuration);
 
-        player.Die();
     }
 }
