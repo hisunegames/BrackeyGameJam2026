@@ -1800,6 +1800,156 @@ MonoBehaviour:
       value: Return to Professor
       type: 0
       typeString: 
+  - id: 22
+    fields:
+    - title: Name
+      value: SalarymanQuest
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  - id: 23
+    fields:
+    - title: Name
+      value: HomelessManQuest
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  - id: 24
+    fields:
+    - title: Name
+      value: OtakuQuest
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  - id: 25
+    fields:
+    - title: Name
+      value: PranQuest
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  - id: 26
+    fields:
+    - title: Name
+      value: TiktokerQuest
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
   locations:
   - id: 1
     fields:
@@ -1829,9 +1979,9 @@ MonoBehaviour:
   - id: 2
     fields:
     - title: Name
-      value: Anomaly
+      value: AnomalyTest
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Initial Value
       value: False
       type: 2
@@ -1839,7 +1989,7 @@ MonoBehaviour:
     - title: Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
   - id: 3
     fields:
     - title: Name
@@ -1952,6 +2102,20 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: CustomFieldType_Text
+  - id: 26
+    fields:
+    - title: Name
+      value: PencilCaseAnomaly.NumCollected
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: 0
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
   - id: 11
     fields:
     - title: Name
@@ -1985,7 +2149,7 @@ MonoBehaviour:
     - title: Name
       value: Laptop.NumCollected
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Initial Value
       value: 0
       type: 1
@@ -1993,7 +2157,21 @@ MonoBehaviour:
     - title: Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
+  - id: 27
+    fields:
+    - title: Name
+      value: LaptopAnomaly.NumCollected
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: 0
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
   - id: 14
     fields:
     - title: Name
@@ -4843,7 +5021,7 @@ MonoBehaviour:
         height: 30
     entryGroups: []
     canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 1
+    canvasZoom: 0.9100001
   - id: 7
     fields:
     - title: Title
@@ -7863,7 +8041,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 175
+        x: 174
         y: 130
         width: 160
         height: 30
@@ -10003,7 +10181,7 @@ MonoBehaviour:
         destinationDialogueID: 5
         isConnector: 0
         priority: 2
-      conditionsString: Variable["PencilCase.NumCollected"] == 1
+      conditionsString: Variable["PencilCaseAnomaly.NumCollected"] == 1
       userScript: SetQuestState("FemaleStudentAnomalyQuest", "success")
       onExecute:
         m_PersistentCalls:
@@ -10092,7 +10270,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetActive(PencilCase, true)
+        value: SetActive(PencilCaseAnomaly, true)
         type: 0
         typeString: 
       conversationID: 20
@@ -12587,7 +12765,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetActive(Laptop, true)
+        value: SetActive(LaptopAnomaly, true)
         type: 0
         typeString: 
       conversationID: 24
@@ -12702,7 +12880,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: Variable["Laptop.NumCollected"] == 1
+      conditionsString: Variable["LaptopAnomaly.NumCollected"] == 1
       userScript: SetQuestState("ProfessorAnomalyQuest", "success")
       onExecute:
         m_PersistentCalls:
@@ -18846,7 +19024,7 @@ MonoBehaviour:
   - id: 38
     fields:
     - title: Title
-      value: Blind guy Variant 1
+      value: Blind Guy Variant 1
       type: 0
       typeString: 
     - title: Description
@@ -19622,7 +19800,7 @@ MonoBehaviour:
   - id: 39
     fields:
     - title: Title
-      value: Blind guy Variant 2
+      value: Blind Guy Variant 2
       type: 0
       typeString: 
     - title: Description
@@ -21947,8 +22125,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 285
-        y: 401
+        x: 286
+        y: 373
         width: 160
         height: 30
     - id: 13
@@ -21996,8 +22174,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 485
-        y: 401
+        x: 486
+        y: 373
         width: 160
         height: 30
     entryGroups: []
@@ -22988,7 +23166,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
+      conditionsString: CurrentQuestState("GlassesGirlQuest") == "active"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -23022,7 +23200,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Can you tell me more about dinosaurs?
+        value: Can you tell me more about something that interests you?
         type: 0
         typeString: 
       - title: Sequence
@@ -23958,8 +24136,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 24.206413
-        y: 555.1513
+        x: 9.571442
+        y: 550.8656
         width: 160
         height: 30
     - id: 11
@@ -24007,8 +24185,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 204.92407
-        y: 555.98724
+        x: 186.3527
+        y: 551.70154
         width: 160
         height: 30
     - id: 12
@@ -24267,15 +24445,15 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
+      conditionsString: CurrentQuestState("GlassesGirlQuest") == "active"
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 413
-        y: 101
+        x: 425.85712
+        y: 92.42857
         width: 160
         height: 30
     - id: 17
@@ -24301,7 +24479,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Can you tell me more about dinosaurs?
+        value: Can you tell me more about something that interests you?
         type: 0
         typeString: 
       - title: Sequence
@@ -24329,8 +24507,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 392.07544
-        y: 555.99255
+        x: 382.07544
+        y: 548.84973
         width: 160
         height: 30
     - id: 18
@@ -24356,11 +24534,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: .\..\..\.no. Just help me find Kakaw.
+        value: "Yes, sure thing! \u2026(lots of yapping about chickens) \u2026"
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'Delay(1);
+
+          SetContinueMode(true)'
         type: 0
         typeString: 
       - title: Response Menu Sequence
@@ -24378,13 +24558,7 @@ MonoBehaviour:
       - originConversationID: 43
         originDialogueID: 18
         destinationConversationID: 43
-        destinationDialogueID: 19
-        isConnector: 0
-        priority: 2
-      - originConversationID: 43
-        originDialogueID: 18
-        destinationConversationID: 43
-        destinationDialogueID: 20
+        destinationDialogueID: 21
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -24394,8 +24568,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 393.70142
-        y: 607.3126
+        x: 380.84427
+        y: 603.02686
         width: 160
         height: 30
     - id: 19
@@ -24446,8 +24620,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 310.20627
-        y: 666.05054
+        x: 285.9206
+        y: 713.19336
         width: 160
         height: 30
     - id: 20
@@ -24495,8 +24669,71 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 499.52667
-        y: 664.10876
+        x: 475.241
+        y: 711.2516
+        width: 160
+        height: 30
+    - id: 21
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 13
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: Hey!\. Don't distract me, help me find Kakaw
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 'SetContinueMode(false);
+
+          Delay(1)'
+        type: 0
+        typeString: 
+      conversationID: 43
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 43
+        originDialogueID: 21
+        destinationConversationID: 43
+        destinationDialogueID: 19
+        isConnector: 0
+        priority: 2
+      - originConversationID: 43
+        originDialogueID: 21
+        destinationConversationID: 43
+        destinationDialogueID: 20
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 379.99985
+        y: 657.1426
         width: 160
         height: 30
     entryGroups: []

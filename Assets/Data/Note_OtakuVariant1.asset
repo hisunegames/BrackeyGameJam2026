@@ -13,12 +13,7 @@ MonoBehaviour:
   m_Name: Note_OtakuVariant1
   m_EditorClassIdentifier: Assembly-CSharp::NoteData
   _title: Security Log - Otaku
-  _noteText: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus
-    ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis
-    convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla
-    lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer
-    nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
-    torquent per conubia nostra inceptos himenaeos.
+  _noteText: Carries a carry replica of an anime staff
   _keywords:
   - Nerdy
   - Owns a "Staff"
