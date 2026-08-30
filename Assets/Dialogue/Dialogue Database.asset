@@ -25323,7 +25323,7 @@ MonoBehaviour:
       - title: Sequence
         value: 'Delay(2);
 
-          SetContinueMode(false)'
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 44
@@ -26102,7 +26102,7 @@ MonoBehaviour:
       - title: Sequence
         value: 'Delay(2);
 
-          SetContinueMode(false)'
+          SetContinueMode(true)'
         type: 0
         typeString: 
       conversationID: 45
