@@ -18,12 +18,38 @@ public class MonsterGrabAttack : MonoBehaviour
     [SerializeField] CinemachineCamera _grabCamera;
     [SerializeField] int _grabCameraPriority = 20;
 
+    [Header("Grab Timing")]
+    // Player has to stay in the trigger for this long before actually getting grabbed - stops
+    // an instant grab if the monster happens to spawn on top of (or right next to) the player.
+    [SerializeField] float _grabDelay = 0.5f;
+
     bool _hasGrabbed;
+    PlayerController _playerInZone;
+    float _zoneTimer;
 
     void Awake()
     {
         if (_agent == null)
             _agent = GetComponent<NavMeshAgent>();
+    }
+
+    void Update()
+    {
+        if (_hasGrabbed || _playerInZone == null)
+            return;
+
+        if (_playerInZone.IsDead)
+        {
+            _playerInZone = null;
+            return;
+        }
+
+        _zoneTimer += Time.deltaTime;
+        if (_zoneTimer < _grabDelay)
+            return;
+
+        _hasGrabbed = true;
+        StartCoroutine(GrabSequence(_playerInZone));
     }
 
     void OnTriggerEnter(Collider other)
@@ -39,8 +65,17 @@ public class MonsterGrabAttack : MonoBehaviour
         if (player == null || player.IsDead)
             return;
 
-        _hasGrabbed = true;
-        StartCoroutine(GrabSequence(player));
+        _playerInZone = player;
+        _zoneTimer = 0f;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+            return;
+
+        _playerInZone = null;
+        _zoneTimer = 0f;
     }
 
     IEnumerator GrabSequence(PlayerController player)
@@ -63,10 +98,15 @@ public class MonsterGrabAttack : MonoBehaviour
         if (playerLook != null)
             playerLook.SetLookEnabled(false);
 
-        // Raising priority above the player's vcam (which sits at the default/disabled 0) is
-        // enough for CinemachineBrain to blend over automatically - no manual camera swap needed.
+        // Starts disabled on the prefab - its priority ties with the player's vcam (both default
+        // to 0), and Cinemachine breaks priority ties in favor of whichever vcam was activated
+        // most recently, so leaving it enabled from spawn made it steal the camera the instant
+        // the monster was instantiated. Only activate it here, for the actual grab.
         if (_grabCamera != null)
+        {
+            _grabCamera.gameObject.SetActive(true);
             _grabCamera.Priority = _grabCameraPriority;
+        }
 
         if (_animator != null)
             _animator.SetTrigger(_grabTrigger);

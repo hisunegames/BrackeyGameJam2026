@@ -109,7 +109,11 @@ public class PenaltyManager : MonoBehaviour
             return;
 
         GameObject prefab = _monsterVariants[UnityEngine.Random.Range(0, _monsterVariants.Length)];
-        if (!NavMeshSpawner.TryGetRandomPointInPolygon(SpawnCenter, _spawnPolygon, out Vector3 point))
+
+        Vector3 boundsCenter = NPCBounds.Instance != null ? NPCBounds.Instance.Center : Vector3.zero;
+        Vector2[] boundsPolygon = NPCBounds.Instance != null ? NPCBounds.Instance.Polygon : null;
+
+        if (!NavMeshSpawner.TryGetRandomPointInPolygon(SpawnCenter, _spawnPolygon, boundsCenter, boundsPolygon, out Vector3 point))
             return;
 
         GameObject monster = Instantiate(prefab, point, Quaternion.identity);

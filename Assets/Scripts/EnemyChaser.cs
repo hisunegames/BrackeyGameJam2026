@@ -18,6 +18,7 @@ public class EnemyChaser : MonoBehaviour
 
     [Header("Chase Settings")]
     [SerializeField] float _chaseSpeed = 6f;
+    [SerializeField] float _chaseAcceleration = 2f;
     [SerializeField] float _loseSightDelay = 3f;
 
     [Header("Detection Wind-Up")]
@@ -87,6 +88,10 @@ public class EnemyChaser : MonoBehaviour
                 break;
 
             case EnemyState.Chase:
+                // Ramps up toward chase speed rather than snapping to it - stops ramping (and
+                // gets reset to base speed) the moment interest is lost, via EnterIdle().
+                _agent.speed = Mathf.MoveTowards(_agent.speed, _chaseSpeed, _chaseAcceleration * Time.deltaTime);
+
                 if (_lineOfSight.HasDetectedPlayer)
                 {
                     _loseSightTimer = _loseSightDelay;
@@ -136,7 +141,9 @@ public class EnemyChaser : MonoBehaviour
         CurrentState = EnemyState.Chase;
         _loseSightTimer = _loseSightDelay;
         _agent.isStopped = false;
-        _agent.speed = _chaseSpeed;
+        // Speed isn't snapped here - it ramps up toward _chaseSpeed frame by frame in Update()
+        // instead, starting from whatever it's currently at (base speed, since nothing else
+        // touches it between EnterIdle() and here).
         _agent.SetDestination(_target.position);
 
         if (_animator != null)

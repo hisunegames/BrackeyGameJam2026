@@ -1422,384 +1422,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-  - id: 15
-    fields:
-    - title: Name
-      value: TestReturnQuest
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Success Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Failure Description
-      value: 
-      type: 0
-      typeString: 
-    - title: State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Is Item
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: Return to NPC
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Entry Count
-      value: 1
-      type: 1
-      typeString: CustomFieldType_Number
-    - title: Entry 1 State
-      value: active
-      type: 0
-      typeString: 
-    - title: Entry 1
-      value: Return to NPC
-      type: 0
-      typeString: 
-  - id: 16
-    fields:
-    - title: Name
-      value: BillionaireReturn
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Success Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Failure Description
-      value: 
-      type: 0
-      typeString: 
-    - title: State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Is Item
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: Billionaire's Quest
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Entry Count
-      value: 1
-      type: 1
-      typeString: CustomFieldType_Number
-    - title: Entry 1 State
-      value: active
-      type: 0
-      typeString: 
-    - title: Entry 1
-      value: Return to the Billionaire
-      type: 0
-      typeString: 
-  - id: 17
-    fields:
-    - title: Name
-      value: CookingMamaReturn
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Success Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Failure Description
-      value: 
-      type: 0
-      typeString: 
-    - title: State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Is Item
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: Cooking Mom's Quest
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Entry Count
-      value: 1
-      type: 1
-      typeString: CustomFieldType_Number
-    - title: Entry 1 State
-      value: active
-      type: 0
-      typeString: 
-    - title: Entry 1
-      value: Return to Cooking Mom
-      type: 0
-      typeString: 
-  - id: 18
-    fields:
-    - title: Name
-      value: BlindGuyReturn
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Success Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Failure Description
-      value: 
-      type: 0
-      typeString: 
-    - title: State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Is Item
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: Blind Guy's Quest
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Entry Count
-      value: 1
-      type: 1
-      typeString: CustomFieldType_Number
-    - title: Entry 1 State
-      value: active
-      type: 0
-      typeString: 
-    - title: Entry 1
-      value: Return to the Blind Guy
-      type: 0
-      typeString: 
-  - id: 19
-    fields:
-    - title: Name
-      value: FemaleStudentReturn
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Success Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Failure Description
-      value: 
-      type: 0
-      typeString: 
-    - title: State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Is Item
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: Female Student's Quest
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Entry Count
-      value: 1
-      type: 1
-      typeString: CustomFieldType_Number
-    - title: Entry 1 State
-      value: active
-      type: 0
-      typeString: 
-    - title: Entry 1
-      value: Return to the Female Student
-      type: 0
-      typeString: 
-  - id: 20
-    fields:
-    - title: Name
-      value: GlassesGirlReturn
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Success Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Failure Description
-      value: 
-      type: 0
-      typeString: 
-    - title: State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Is Item
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: Glasses Girl's Quest
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Entry Count
-      value: 1
-      type: 1
-      typeString: CustomFieldType_Number
-    - title: Entry 1 State
-      value: active
-      type: 0
-      typeString: 
-    - title: Entry 1
-      value: Return to Glasses Girl
-      type: 0
-      typeString: 
-  - id: 21
-    fields:
-    - title: Name
-      value: ProfessorReturn
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Success Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Failure Description
-      value: 
-      type: 0
-      typeString: 
-    - title: State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Is Item
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: Professor's Quest
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Entry Count
-      value: 1
-      type: 1
-      typeString: CustomFieldType_Number
-    - title: Entry 1 State
-      value: active
-      type: 0
-      typeString: 
-    - title: Entry 1
-      value: Return to Professor
-      type: 0
-      typeString: 
   - id: 22
     fields:
     - title: Name
@@ -3877,8 +3499,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 45.882385, y: 38.823532}
-    canvasZoom: 0.85000014
+    canvasScrollPosition: {x: 52.801468, y: 0}
+    canvasZoom: 0.8800001
   - id: 3
     fields:
     - title: Title
@@ -4749,8 +4371,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 26.650434, y: 4.747562}
+    canvasZoom: 1.03
   - id: 6
     fields:
     - title: Title
@@ -5571,7 +5193,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 2}
     canvasZoom: 1
   - id: 9
     fields:
@@ -11616,7 +11238,7 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: CurrentQuestState("GlassesGirlAnomalyQuest") == "unassigned"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -11992,7 +11614,8 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
+      conditionsString: CurrentQuestState("GlassesGirlAnomalyQuest") == "active"
+        && Variable["ChickenPet.NumCollected"] == 0
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -12918,7 +12541,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: CurrentQuestState("ProfessorQuest") == "active"
+        value: 
         type: 0
         typeString: 
       conversationID: 24
@@ -12929,7 +12552,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
+      conditionsString: CurrentQuestState("ProfessorQuest") == "active"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -14161,7 +13784,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 23}
     canvasZoom: 1
   - id: 27
     fields:
@@ -14506,8 +14129,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 217
-        y: 289
+        x: 214
+        y: 285
         width: 160
         height: 30
     - id: 5
@@ -14773,7 +14396,7 @@ MonoBehaviour:
       - originConversationID: 27
         originDialogueID: 9
         destinationConversationID: 27
-        destinationDialogueID: 11
+        destinationDialogueID: 13
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -14839,58 +14462,6 @@ MonoBehaviour:
         y: 448
         width: 160
         height: 30
-    - id: 11
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 8
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: "Rest accrued sir, I\u2019ll look for it."
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: SetActive(Sunglasses1989, true)
-        type: 0
-        typeString: 
-      conversationID: 27
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: 'SetQuestState("BillionaireQuest", "active");
-
-        ShowAlert("New
-        Quest: Find the sunglasses")'
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 510
-        y: 448
-        width: 160
-        height: 30
     - id: 12
       fields:
       - title: Title
@@ -14940,8 +14511,57 @@ MonoBehaviour:
         y: 104
         width: 160
         height: 30
+    - id: 13
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 8
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: "Sorry sir, I\u2019ll come back to you later."
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 27
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 567
+        y: 436
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 16}
     canvasZoom: 1
   - id: 28
     fields:
@@ -15870,7 +15490,7 @@ MonoBehaviour:
   - id: 31
     fields:
     - title: Title
-      value: 'NonQuestableNPC '
+      value: NonQuestableNPC
       type: 0
       typeString: 
     - title: Description
@@ -18246,7 +17866,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 21}
     canvasZoom: 1
   - id: 37
     fields:
@@ -20576,7 +20196,7 @@ MonoBehaviour:
   - id: 40
     fields:
     - title: Title
-      value: Female student Variant 1
+      value: Female Student Variant 1
       type: 0
       typeString: 
     - title: Description
@@ -21408,7 +21028,7 @@ MonoBehaviour:
   - id: 41
     fields:
     - title: Title
-      value: Female student Variant 2
+      value: Female Student Variant 2
       type: 0
       typeString: 
     - title: Description
@@ -22963,7 +22583,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 653
+        x: 654.3158
         y: 55
         width: 160
         height: 30
@@ -25512,11 +25132,11 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 538
-        y: 404
+        y: 403
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 18}
     canvasZoom: 1
   - id: 45
     fields:
@@ -35752,7 +35372,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 96, y: 0}
     canvasZoom: 1
   - id: 64
     fields:

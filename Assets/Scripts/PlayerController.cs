@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using DG.Tweening;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
@@ -32,6 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _staminaDrainRate = 25f;
     [SerializeField] float _staminaRegenRate = 15f;
     [SerializeField] float _staminaRegenDelay = 1f;
+    [SerializeField] float _staminaDepletedRegenDelay = 3f;
     [SerializeField] CinemachineBasicMultiChannelPerlin _sprintShake;
     [SerializeField] float _sprintShakeAmplitude = 1f;
     [SerializeField] float _shakeBlendSpeed = 4f;
@@ -56,8 +56,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject _redVignette;
     [SerializeField] float _asthmaThreshold;
     [SerializeField] float _erythropsiaThreshold;
-    [SerializeField] GameObject blackScreen;
-    [SerializeField] GameObject gameoverScreen;
 
     CharacterController _controller;
     float _standingHeight;
@@ -78,11 +76,13 @@ public class PlayerController : MonoBehaviour
     public float StaminaFraction => _currentStamina / _maxStamina;
     public bool IsCrouching => _isCrouching;
     public Vector3 Motion { get; private set; }
-    
+
     public bool IsTalking => _isTalking;
     public bool IsDead => _isDead;
 
-    public static event Action OnPlayerDied;
+    public enum DeathCause { Killed, Fired }
+
+    public static event Action<DeathCause> OnPlayerDied;
 
     private void Awake()
     {
@@ -116,8 +116,9 @@ public class PlayerController : MonoBehaviour
         if (_isDead)
             return;
 
-        // Get movement input and convert it to a 3D vector
-        Vector2 moveInput = _moveInputAction.action.ReadValue<Vector2>();
+        // Get movement input and convert it to a 3D vector - frozen while in a conversation so
+        // the player can't wander off mid-dialogue.
+        Vector2 moveInput = _isTalking ? Vector2.zero : _moveInputAction.action.ReadValue<Vector2>();
         Vector3 moveInputIn3D = new Vector3(moveInput.x, 0, moveInput.y);
 
         // Take the pan angle from the CinemachinePanTilt component
@@ -211,7 +212,8 @@ public class PlayerController : MonoBehaviour
             _isSprinting = true;
             _currentStamina = Mathf.Max(0f, _currentStamina - _staminaDrainRate * Time.deltaTime);
 
-            _regenDelayTimer = _staminaRegenDelay;
+            // Fully draining it costs a longer regen delay than just tapping sprint briefly.
+            _regenDelayTimer = _currentStamina <= 0f ? _staminaDepletedRegenDelay : _staminaRegenDelay;
             _staminaBarDelayTimer = _staminaBarDisappearDelay;
             if (_staminaBackground != null && _staminaBar != null)
             {
@@ -322,7 +324,7 @@ public class PlayerController : MonoBehaviour
         return !Physics.SphereCast(origin, _controller.radius * 0.9f, Vector3.up, out _, checkDistance, _obstructionLayers, QueryTriggerInteraction.Ignore);
     }
 
-     void HandleHealth()
+    void HandleHealth()
     {
 
         _healthRegenDelayTimer -= Time.deltaTime;
@@ -341,7 +343,7 @@ public class PlayerController : MonoBehaviour
             _redVignette.GetComponent<Image>().DOFade(0f, 2f);
             debounce = false;
         }
-            
+
     }
     public void TakeDamage(float damage)
     {
@@ -354,7 +356,7 @@ public class PlayerController : MonoBehaviour
             Die();
     }
 
-    public void Die()
+    public void Die(DeathCause cause = DeathCause.Killed)
     {
         if (_isDead)
             return;
@@ -362,65 +364,16 @@ public class PlayerController : MonoBehaviour
         _isDead = true;
         _currentHealth = 0f;
         _isSprinting = false;
-        _playerHand.SetActive(false);
+
+        if (_playerHand != null)
+            _playerHand.SetActive(false);
 
         StopHandShake();
         _sprintShake.AmplitudeGain = 0f;
 
-        //Debug.Log("[PlayerController] Player died - no Game Over screen yet, this is a placeholder");
-        StartCoroutine(ShowBlackThenGameOver());
-        OnPlayerDied?.Invoke();
-    }
-
-    IEnumerator ShowBlackThenGameOver()
-    {
-        yield return new WaitForSeconds(2f);
-        blackScreen.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        gameoverScreen.SetActive(true);
-        blackScreen.SetActive(false);
-    }
-
-    public void ApplyBuff(BuffType type, float amount)
-    {
-        switch (type)
-        {
-            case BuffType.MoveSpeed:
-                _moveSpeed += amount;
-                break;
-            case BuffType.SprintSpeed:
-                _sprintSpeed += amount;
-                break;
-            case BuffType.MaxStamina:
-                _maxStamina += amount;
-                _currentStamina += amount;
-                break;
-            case BuffType.MaxHealth:
-                _maxHealth += amount;
-                _currentHealth += amount;
-                break;
-        }
-    }
-
-    public void RemoveBuff(BuffType type, float amount)
-    {
-        switch (type)
-        {
-            case BuffType.MoveSpeed:
-                _moveSpeed -= amount;
-                break;
-            case BuffType.SprintSpeed:
-                _sprintSpeed -= amount;
-                break;
-            case BuffType.MaxStamina:
-                _maxStamina -= amount;
-                _currentStamina = Mathf.Min(_currentStamina, _maxStamina);
-                break;
-            case BuffType.MaxHealth:
-                _maxHealth -= amount;
-                _currentHealth = Mathf.Min(_currentHealth, _maxHealth);
-                break;
-        }
+        // Presentation (black screen delay, Game Over panel/stats) lives in GameOverUI, which
+        // listens for this event - keeps this class about player state, not UI orchestration.
+        OnPlayerDied?.Invoke(cause);
     }
 
     // CharacterController doesn't push Rigidbodies on its own (and, having no Rigidbody itself,

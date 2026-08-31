@@ -2102,6 +2102,20 @@ MonoBehaviour:
       value: 
       type: 0
       typeString: CustomFieldType_Text
+  - id: 26
+    fields:
+    - title: Name
+      value: PencilCaseAnomaly.NumCollected
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: 0
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
   - id: 11
     fields:
     - title: Name
@@ -2135,7 +2149,7 @@ MonoBehaviour:
     - title: Name
       value: Laptop.NumCollected
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Initial Value
       value: 0
       type: 1
@@ -2143,7 +2157,21 @@ MonoBehaviour:
     - title: Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
+  - id: 27
+    fields:
+    - title: Name
+      value: LaptopAnomaly.NumCollected
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: 0
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
   - id: 14
     fields:
     - title: Name
@@ -3849,8 +3877,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 45.882385, y: 38.823532}
-    canvasZoom: 0.85000014
+    canvasScrollPosition: {x: 52.801468, y: 0}
+    canvasZoom: 0.8800001
   - id: 3
     fields:
     - title: Title
@@ -4721,8 +4749,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 26.650434, y: 4.747562}
+    canvasZoom: 1.03
   - id: 6
     fields:
     - title: Title
@@ -5543,7 +5571,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 2}
     canvasZoom: 1
   - id: 9
     fields:
@@ -10153,7 +10181,7 @@ MonoBehaviour:
         destinationDialogueID: 5
         isConnector: 0
         priority: 2
-      conditionsString: Variable["PencilCase.NumCollected"] == 1
+      conditionsString: Variable["PencilCaseAnomaly.NumCollected"] == 1
       userScript: SetQuestState("FemaleStudentAnomalyQuest", "success")
       onExecute:
         m_PersistentCalls:
@@ -10242,7 +10270,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetActive(PencilCase, true)
+        value: SetActive(PencilCaseAnomaly, true)
         type: 0
         typeString: 
       conversationID: 20
@@ -12737,7 +12765,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetActive(Laptop, true)
+        value: SetActive(LaptopAnomaly, true)
         type: 0
         typeString: 
       conversationID: 24
@@ -12852,7 +12880,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: Variable["Laptop.NumCollected"] == 1
+      conditionsString: Variable["LaptopAnomaly.NumCollected"] == 1
       userScript: SetQuestState("ProfessorAnomalyQuest", "success")
       onExecute:
         m_PersistentCalls:
@@ -18218,7 +18246,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 21}
     canvasZoom: 1
   - id: 37
     fields:
@@ -22935,7 +22963,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 653
+        x: 654.3158
         y: 55
         width: 160
         height: 30
@@ -25488,7 +25516,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 18}
     canvasZoom: 1
   - id: 45
     fields:
@@ -35724,7 +35752,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 96, y: 0}
     canvasZoom: 1
   - id: 64
     fields:

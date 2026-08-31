@@ -6,9 +6,16 @@ public class NPCManager : MonoBehaviour
     [System.Serializable]
     struct NpcVariant
     {
-        public GameObject prefab;
+        // Multiple entries here are purely cosmetic (e.g. outfit swaps) - one gets picked at
+        // random per spawn. They all still count as the same character for CharacterId purposes.
+        public GameObject[] spritePrefabs;
+
+        // Rare cosmetic swap, independent of IsAnomaly - structurally like the old anomaly
+        // prefab/chance, but purely a look, not a tell.
+        public GameObject specialVariantPrefab;
+        [Range(0f, 1f)] public float specialVariantChance;
+
         public float weight;
-        public GameObject anomalyPrefab;
     }
 
     [Header("NPC Pool")]
@@ -52,17 +59,18 @@ public class NPCManager : MonoBehaviour
         // Guarantee at least one of each configured normal variant.
         foreach (NpcVariant variant in _npcVariants)
         {
-            if (variant.prefab == null || spawned >= _npcCount)
+            if (!HasSprites(variant) || spawned >= _npcCount)
                 continue;
 
-            SpawnNpc(variant.prefab, false);
+            SpawnNpc(variant, false);
             spawned++;
         }
 
-        // Guarantee at least one anomaly, if any variant supports one.
-        if (spawned < _npcCount && TryGetRandomVariantWithAnomaly(out NpcVariant anomalyVariant))
+        // Guarantee at least one anomaly - same variant pool as everyone else, since appearance
+        // is purely cosmetic and shouldn't be a tell.
+        if (spawned < _npcCount && TryGetWeightedVariant(out NpcVariant anomalyVariant))
         {
-            SpawnNpc(anomalyVariant.anomalyPrefab, true);
+            SpawnNpc(anomalyVariant, true);
             spawned++;
         }
 
@@ -75,26 +83,24 @@ public class NPCManager : MonoBehaviour
         if (!TryGetWeightedVariant(out NpcVariant variant))
             return;
 
-        bool spawnAsAnomaly = variant.anomalyPrefab != null && Random.value < _anomalyChance;
-        GameObject prefab = spawnAsAnomaly ? variant.anomalyPrefab : variant.prefab;
-
-        SpawnNpc(prefab, spawnAsAnomaly);
+        bool spawnAsAnomaly = Random.value < _anomalyChance;
+        SpawnNpc(variant, spawnAsAnomaly);
     }
 
-    void SpawnNpc(GameObject prefab, bool isAnomaly)
+    void SpawnNpc(NpcVariant variant, bool isAnomaly)
     {
-        if (prefab == null)
+        GameObject prefab = GetRandomSprite(variant);
+        if (prefab == null || !SpawnerUtility.TrySpawnInBounds(prefab, out GameObject npc))
             return;
 
-        if (NPCBounds.Instance == null || !NavMeshSpawner.TryGetRandomPointInPolygon(NPCBounds.Instance.Center, NPCBounds.Instance.Polygon, out Vector3 point))
-            return;
-
-        GameObject npc = Instantiate(prefab, point, Quaternion.identity);
         _spawnedNpcs.Add(npc);
 
         if (npc.TryGetComponent(out NPCIdentity identity))
         {
-            identity.SetCharacterId(prefab.name);
+            // Stable per-variant id (not per-sprite, and not the special variant either) so any
+            // cosmetic sprite swap of the same character still registers as a duplicate for the
+            // quest-pool's dedup logic.
+            identity.SetCharacterId(GetCharacterId(variant));
             identity.SetIsAnomaly(isAnomaly);
         }
 
@@ -107,34 +113,28 @@ public class NPCManager : MonoBehaviour
             NPCQuestPoolManager.Instance.RegisterNormalNpc(npc);
     }
 
-    void DespawnAll()
-    {
-        foreach (GameObject npc in _spawnedNpcs)
-        {
-            if (npc != null)
-                Destroy(npc);
-        }
+    void DespawnAll() => SpawnerUtility.DestroyAndClear(_spawnedNpcs);
 
-        _spawnedNpcs.Clear();
+    bool HasSprites(NpcVariant variant) => variant.spritePrefabs != null && variant.spritePrefabs.Length > 0;
+
+    GameObject GetRandomSprite(NpcVariant variant)
+    {
+        // Rare cosmetic swap, rolled independently of IsAnomaly - a look, not a tell.
+        if (variant.specialVariantPrefab != null && Random.value < variant.specialVariantChance)
+            return variant.specialVariantPrefab;
+
+        if (!HasSprites(variant))
+            return null;
+
+        return variant.spritePrefabs[Random.Range(0, variant.spritePrefabs.Length)];
     }
 
-    bool TryGetRandomVariantWithAnomaly(out NpcVariant variant)
+    string GetCharacterId(NpcVariant variant)
     {
-        List<NpcVariant> eligible = new();
-        foreach (NpcVariant entry in _npcVariants)
-        {
-            if (entry.anomalyPrefab != null)
-                eligible.Add(entry);
-        }
+        if (HasSprites(variant))
+            return variant.spritePrefabs[0].name;
 
-        if (eligible.Count == 0)
-        {
-            variant = default;
-            return false;
-        }
-
-        variant = eligible[Random.Range(0, eligible.Count)];
-        return true;
+        return variant.specialVariantPrefab != null ? variant.specialVariantPrefab.name : string.Empty;
     }
 
     bool TryGetWeightedVariant(out NpcVariant variant)

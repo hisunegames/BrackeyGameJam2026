@@ -23,6 +23,28 @@ public class NoteAppUIManager : MonoBehaviour
     public IReadOnlyList<NoteData> CollectedNotes => _collectedNotes;
     public bool IsOpen => _notesPanel != null && _notesPanel.activeSelf;
 
+    // Distinct keyword count across every note read so far - for the Game Over stats screen.
+    public int TotalKeywordsFound
+    {
+        get
+        {
+            HashSet<string> keywords = new();
+            foreach (NoteData note in _collectedNotes)
+            {
+                if (note.Keywords == null)
+                    continue;
+
+                foreach (string keyword in note.Keywords)
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                        keywords.Add(keyword);
+                }
+            }
+
+            return keywords.Count;
+        }
+    }
+
     void Awake()
     {
         if (_instance != null && _instance != this)

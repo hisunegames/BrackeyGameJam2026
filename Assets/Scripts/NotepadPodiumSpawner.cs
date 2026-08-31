@@ -41,13 +41,15 @@ public class NotepadPodiumSpawner : MonoBehaviour
     {
         DespawnAll();
 
-        // NPCManager and NPCQuestPoolManager also react to this same event to (re)populate the day's
-        // NPC pool - wait a frame so their handlers have definitely run before we read that pool.
+        // NPCManager registers the day's NPCs synchronously (same frame as this event), but
+        // NPCQuestPoolManager now defers its own matching by one frame for the same reason we
+        // defer here - so this needs to wait two frames total to run after THAT, not race it.
         StartCoroutine(SpawnAllNextFrame());
     }
 
     IEnumerator SpawnAllNextFrame()
     {
+        yield return null;
         yield return null;
         SpawnAll();
     }
@@ -64,7 +66,7 @@ public class NotepadPodiumSpawner : MonoBehaviour
             podiumCount = Mathf.Min(podiumCount, notes.Count);
 
         List<Transform> points = new(_spawnPoints);
-        Shuffle(points);
+        SpawnerUtility.Shuffle(points);
 
         List<NoteData>[] buckets = SplitNotes(notes, podiumCount);
         for (int i = 0; i < podiumCount; i++)
@@ -97,15 +99,6 @@ public class NotepadPodiumSpawner : MonoBehaviour
         return buckets;
     }
 
-    void Shuffle(List<Transform> list)
-    {
-        for (int i = list.Count - 1; i > 0; i--)
-        {
-            int j = Random.Range(0, i + 1);
-            (list[i], list[j]) = (list[j], list[i]);
-        }
-    }
-
     List<NoteData> CollectDayNotes()
     {
         List<NoteData> notes = new();
@@ -115,7 +108,8 @@ public class NotepadPodiumSpawner : MonoBehaviour
             foreach (GameObject npc in NPCQuestPoolManager.Instance.ActiveQuestGivers)
                 AddNoteFor(npc, notes);
 
-            AddNoteFor(NPCQuestPoolManager.Instance.AnomalyNpc, notes);
+            foreach (GameObject anomalyNpc in NPCQuestPoolManager.Instance.AnomalyNpcs)
+                AddNoteFor(anomalyNpc, notes);
         }
 
         return notes;
@@ -150,16 +144,7 @@ public class NotepadPodiumSpawner : MonoBehaviour
         }
     }
 
-    void DespawnAll()
-    {
-        foreach (GameObject podium in _spawnedNotepads)
-        {
-            if (podium != null)
-                Destroy(podium);
-        }
-
-        _spawnedNotepads.Clear();
-    }
+    void DespawnAll() => SpawnerUtility.DestroyAndClear(_spawnedNotepads);
 
     public void DebugToggleSpawnAll()
     {
@@ -190,13 +175,7 @@ public class NotepadPodiumSpawner : MonoBehaviour
 
     void DebugDespawnAll()
     {
-        foreach (GameObject notepad in _debugSpawnedNotepads)
-        {
-            if (notepad != null)
-                Destroy(notepad);
-        }
-
-        _debugSpawnedNotepads.Clear();
+        SpawnerUtility.DestroyAndClear(_debugSpawnedNotepads);
         _debugNotepadsActive = false;
     }
 

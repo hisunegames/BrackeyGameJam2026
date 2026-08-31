@@ -12,16 +12,40 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] bool _lockCursor = true;
 
     bool _cursorLocked;
+    bool _isDead;
 
     private void OnEnable()
     {
         _lookInputAction.action.Enable();
-        SetCursorLocked(_lockCursor);
+        // Don't lock/enable look immediately - the scene is already running (frozen under the
+        // main menu) at this point, which is exactly the window where the camera could move
+        // before real gameplay even starts. Wait for GameManager to actually reach Gameplay.
+        SetCursorLocked(false);
+        GameManager.OnStateChanged += HandleStateChanged;
+        PlayerController.OnPlayerDied += HandlePlayerDied;
     }
 
     private void OnDisable()
     {
         _lookInputAction.action.Disable();
+        SetCursorLocked(false);
+        GameManager.OnStateChanged -= HandleStateChanged;
+        PlayerController.OnPlayerDied -= HandlePlayerDied;
+    }
+
+    void HandleStateChanged(GameState state)
+    {
+        if (state == GameState.Gameplay)
+            SetCursorLocked(_lockCursor);
+    }
+
+    // GameManager.CurrentState never actually leaves Gameplay on death, so without this,
+    // HandleCursorToggle would just re-lock the cursor the moment the player clicks the Game
+    // Over panel's Return to Menu button (a left-click, which is exactly what it also treats as
+    // "lock the cursor again").
+    void HandlePlayerDied(PlayerController.DeathCause cause)
+    {
+        _isDead = true;
         SetCursorLocked(false);
     }
 
@@ -47,6 +71,9 @@ public class PlayerLook : MonoBehaviour
 
     void HandleCursorToggle()
     {
+        if (_isDead)
+            return;
+
         bool canLook = GameManager.Instance == null || GameManager.Instance.CurrentState == GameState.Gameplay;
 
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)

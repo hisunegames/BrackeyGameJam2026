@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Note", menuName = "Notes/Note Data")]
@@ -9,7 +10,12 @@ public class NoteData : ScriptableObject
     [SerializeField] string _noteText;
     [SerializeField] string[] _keywords;
     [SerializeField] float _keywordBlinkFrequency = 1f;
+    [ConversationPopup]
     [SerializeField] string _conversationName;
+
+    // For NPCs whose anomaly status is decided by which note variant gets picked (instead of a
+    // separate pre-rolled flag) - see NPCIdentity's _anomalyDeterminedByNoteVariant.
+    [SerializeField] bool _indicatesAnomaly;
 
     public string Title => _title;
     public string NoteText => _noteText;
@@ -18,6 +24,8 @@ public class NoteData : ScriptableObject
     // The Dialogue System conversation that matches this specific note variant - keeps the
     // clues the player reads consistent with what the NPC actually says that day.
     public string ConversationName => _conversationName;
+
+    public bool IndicatesAnomaly => _indicatesAnomaly;
 
     // Weaves each keyword into a random gap between the flavor text's words, highlighted with
     // the <blink> Text Animator tag, so the note reads naturally with the clues mixed in.

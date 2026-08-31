@@ -7,11 +7,13 @@ public class TimerAppUI : MonoBehaviour
     [SerializeField] string _chaseText = "<shake a=1 d=0.1>RUN!!</>";
     [SerializeField] string _findBoxText = "<shake a=0.3 d=0.1>FIND THE ELECTRIC BOX!!</>";
     [SerializeField] string _hideTextFormat = "<shake a=0.3 d=0.1>HIDE!! {0}</>";
-    [SerializeField] string _shiftTextFormat = "Shift Ends: {0}";
+    [SerializeField] string _shiftTextFormat = "Shift Ends: {0}\nObjectives: {1}";
+    [SerializeField] string _canClockOutText = "<shake a=0.3 d=0.1>YOU CAN CLOCK OUT!!</>";
     [SerializeField] Vector2 _chaseTextOffset;
     [SerializeField] Vector2 _findBoxTextOffset;
     [SerializeField] Vector2 _hideTextOffset;
     [SerializeField] Vector2 _shiftTextOffset;
+    [SerializeField] Vector2 _canClockOutTextOffset;
 
     RectTransform _textRect;
     Vector2 _baseAnchoredPosition;
@@ -73,10 +75,24 @@ public class TimerAppUI : MonoBehaviour
         }
         else if (GameManager.Instance.CurrentSequence == GameplaySequence.Normal)
         {
-            float remainingTime = ShiftManager.Instance != null ? ShiftManager.Instance.RemainingShiftTime : 0f;
-            int shiftSeconds = Mathf.CeilToInt(Mathf.Max(0f, remainingTime));
-            newText = string.Format(_shiftTextFormat, $"{shiftSeconds / 60:00}:{shiftSeconds % 60:00}");
-            offset = _shiftTextOffset;
+            if (ShiftManager.Instance != null && ShiftManager.Instance.CanClockOut)
+            {
+                newText = _canClockOutText;
+                offset = _canClockOutTextOffset;
+            }
+            else
+            {
+                float remainingTime = ShiftManager.Instance != null ? ShiftManager.Instance.RemainingShiftTime : 0f;
+                int shiftSeconds = Mathf.CeilToInt(Mathf.Max(0f, remainingTime));
+                string objectiveProgress = "0/0";
+                if (ShiftManager.Instance != null)
+                {
+                    ShiftManager.Instance.GetMainQuestProgress(out int completed, out int total);
+                    objectiveProgress = $"{completed}/{total}";
+                }
+                newText = string.Format(_shiftTextFormat, $"{shiftSeconds / 60:00}:{shiftSeconds % 60:00}", objectiveProgress);
+                offset = _shiftTextOffset;
+            }
         }
         else if (PenaltyManager.Instance != null && !PenaltyManager.Instance.IsElectricBoxFixed)
         {

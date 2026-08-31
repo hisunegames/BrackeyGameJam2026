@@ -35,6 +35,17 @@ public static class NavMeshSpawner
     }
 
     public static bool TryGetRandomPointInPolygon(Vector3 center, Vector2[] polygonOffsets, out Vector3 result, int maxAttempts = 30)
+        => TryGetRandomPointInPolygon(center, polygonOffsets, Vector3.zero, null, out result, maxAttempts);
+
+    // Overload that also requires the sampled point to fall within a SECOND polygon (e.g. the
+    // overall level bounds), staying close in height to the PRIMARY center (the caller's actual
+    // anchor, e.g. the player) - not the secondary polygon's own transform, which is just a
+    // bounding marker and isn't necessarily placed at real floor height. For spawns that need to
+    // stay both near some local area AND inside the map on the SAME floor, like a penalty monster
+    // spawning near the player but never past the outer walls or onto a different floor
+    // (NavMesh.SamplePosition's search radius can otherwise snap onto a NavMesh a level above/below
+    // near stairs/gaps).
+    public static bool TryGetRandomPointInPolygon(Vector3 center, Vector2[] polygonOffsets, Vector3 secondaryPolygonCenter, Vector2[] secondaryPolygonOffsets, out Vector3 result, int maxAttempts = 30, float maxAnchorHeightDifference = 3f)
     {
         if (polygonOffsets == null || polygonOffsets.Length < 3)
         {
@@ -50,6 +61,8 @@ public static class NavMeshSpawner
             max = Vector2.Max(max, point);
         }
 
+        bool hasAnchor = secondaryPolygonOffsets != null && secondaryPolygonOffsets.Length >= 3;
+
         for (int i = 0; i < maxAttempts; i++)
         {
             Vector2 randomOffset = new Vector2(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
@@ -57,8 +70,19 @@ public static class NavMeshSpawner
                 continue;
 
             Vector3 worldPoint = center + new Vector3(randomOffset.x, 0f, randomOffset.y);
+
+            if (hasAnchor)
+            {
+                Vector2 secondaryOffset = new Vector2(worldPoint.x - secondaryPolygonCenter.x, worldPoint.z - secondaryPolygonCenter.z);
+                if (!IsPointInPolygon(secondaryOffset, secondaryPolygonOffsets))
+                    continue;
+            }
+
             if (NavMesh.SamplePosition(worldPoint, out NavMeshHit hit, 5f, NavMesh.AllAreas))
             {
+                if (hasAnchor && Mathf.Abs(hit.position.y - center.y) > maxAnchorHeightDifference)
+                    continue;
+
                 result = hit.position;
                 return true;
             }

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab0c77a1488b89c49a4865f16284d097, type: 3}
+  m_Name: Note_OtakuVariant2
+  m_EditorClassIdentifier: Assembly-CSharp::NoteData
+  _title: Security Log - Otaku
+  _noteText: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus
+    ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis
+    convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla
+    lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer
+    nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
+    torquent per conubia nostra inceptos himenaeos.
+  _keywords:
+  - Nerdy
+  - Owns a replica "Sword"
+  _keywordBlinkFrequency: 1
+  _conversationName: Otaku Variant2

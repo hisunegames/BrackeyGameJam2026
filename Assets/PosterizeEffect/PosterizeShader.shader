@@ -16,7 +16,7 @@ Shader "Hidden/PostProcessing/Posterize"
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment Frag
-            #pragma shader_feature_local _POSTERIZE_ON
+            #pragma multi_compile_local _POSTERIZE_ON __
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"

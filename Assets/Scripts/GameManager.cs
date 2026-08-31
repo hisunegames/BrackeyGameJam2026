@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
                 sfxManager.PlayMusic("breaker");
                 debounce = true;
             }
-            
+
             soundManager.ChangeMusic("Entity");
             soundManager.SongState(true);
         }

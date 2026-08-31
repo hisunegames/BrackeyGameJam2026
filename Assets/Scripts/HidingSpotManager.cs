@@ -6,6 +6,7 @@ public class HidingSpotManager : MonoBehaviour
     [SerializeField] HidingSpot[] _hidingSpots;
     [SerializeField] int _openCount = 2;
     [SerializeField, Range(0f, 1f)] float _semiOpenFraction = 0.67f;
+    [SerializeField] DoorScaleAxis _doorScaleAxis = DoorScaleAxis.Y;
 
     public static HidingSpotManager Instance { get; private set; }
 
@@ -15,6 +16,12 @@ public class HidingSpotManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+
+        foreach (HidingSpot spot in _hidingSpots)
+        {
+            if (spot != null)
+                spot.SetScaleAxis(_doorScaleAxis);
+        }
     }
 
     void Start()

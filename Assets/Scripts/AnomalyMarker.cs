@@ -1,14 +1,22 @@
 using UnityEngine;
 
+public enum QuestMarkerState
+{
+    None,
+    Available,
+    Accepted
+}
+
 public class AnomalyMarker : MonoBehaviour
 {
     [SerializeField] SpriteRenderer _minimapMarkerSprite;
     [SerializeField] Color _normalColor = Color.white;
     [SerializeField] Color _markedColor = Color.yellow;
-    [SerializeField] Color _questColor = Color.blue;
+    [SerializeField] Color _questAvailableColor = Color.blue;
+    [SerializeField] Color _questAcceptedColor = Color.green;
 
     public bool IsMarked { get; private set; }
-    public bool IsQuestMarked { get; private set; }
+    public QuestMarkerState QuestState { get; private set; } = QuestMarkerState.None;
 
     void Awake()
     {
@@ -26,11 +34,10 @@ public class AnomalyMarker : MonoBehaviour
         RefreshColor();
     }
 
-    public void SetQuestMarked(bool questMarked)
+    public void SetQuestState(QuestMarkerState state)
     {
-        IsQuestMarked = questMarked;
+        QuestState = state;
         RefreshColor();
-        Debug.Log("Marked");
     }
 
     void RefreshColor()
@@ -38,7 +45,18 @@ public class AnomalyMarker : MonoBehaviour
         if (_minimapMarkerSprite == null)
             return;
 
-        // Manual anomaly suspicion takes visual priority over an automatic quest reminder.
-        _minimapMarkerSprite.color = IsMarked ? _markedColor : (IsQuestMarked ? _questColor : _normalColor);
+        // Manual anomaly suspicion takes visual priority over the automatic quest indicator.
+        if (IsMarked)
+        {
+            _minimapMarkerSprite.color = _markedColor;
+            return;
+        }
+
+        _minimapMarkerSprite.color = QuestState switch
+        {
+            QuestMarkerState.Available => _questAvailableColor,
+            QuestMarkerState.Accepted => _questAcceptedColor,
+            _ => _normalColor
+        };
     }
 }

@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Note_BlindGuy1
   m_EditorClassIdentifier: Assembly-CSharp::NoteData
   _title: Security Log - Blind Guy
-  _noteText: 'His dog is a Golden Retriever '
+  _noteText: Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus
+    ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis
+    convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla
+    lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer
+    nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora
+    torquent per conubia nostra inceptos himenaeos.
   _keywords:
-  - talks a lot (too much)
-  - specifically dinosaurs
-  - has(?) a chicken pet
+  - His dog is a Golden Retriever
   _keywordBlinkFrequency: 1
   _conversationName: Blind Guy Variant 1
