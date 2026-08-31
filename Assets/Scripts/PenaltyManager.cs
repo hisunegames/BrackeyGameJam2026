@@ -12,6 +12,13 @@ public class PenaltyManager : MonoBehaviour
     [SerializeField] Transform _player;
     [SerializeField] Vector3 _spawnOffset;
     [SerializeField] Vector2[] _spawnPolygon;
+    // _spawnPolygon currently duplicates NPCBounds' own (whole-mall-sized) shape rather than a
+    // small area local to the player, so intersecting it against NPCBounds.Polygon (anchored at
+    // NPCBounds' own fixed position, not the player) can come up empty depending on where the
+    // player actually is - e.g. anywhere far from wherever _spawnOffset happens to have been
+    // tuned against. Falls back to a plain radius-based NavMesh sample around SpawnCenter so a
+    // misconfigured/too-small polygon intersection never silently skips the spawn entirely.
+    [SerializeField] float _fallbackSpawnRadius = 15f;
 
     Vector3 SpawnCenter => (_player != null ? _player.position : transform.position) + _spawnOffset;
 
@@ -113,7 +120,11 @@ public class PenaltyManager : MonoBehaviour
         Vector3 boundsCenter = NPCBounds.Instance != null ? NPCBounds.Instance.Center : Vector3.zero;
         Vector2[] boundsPolygon = NPCBounds.Instance != null ? NPCBounds.Instance.Polygon : null;
 
-        if (!NavMeshSpawner.TryGetRandomPointInPolygon(SpawnCenter, _spawnPolygon, boundsCenter, boundsPolygon, out Vector3 point))
+        bool foundPoint = NavMeshSpawner.TryGetRandomPointInPolygon(SpawnCenter, _spawnPolygon, boundsCenter, boundsPolygon, out Vector3 point);
+        if (!foundPoint)
+            foundPoint = NavMeshSpawner.TryGetRandomPoint(SpawnCenter, _fallbackSpawnRadius, out point);
+
+        if (!foundPoint)
             return;
 
         GameObject monster = Instantiate(prefab, point, Quaternion.identity);

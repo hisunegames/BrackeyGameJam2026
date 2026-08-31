@@ -24,3 +24,4 @@ MonoBehaviour:
   - on a selfie stick
   _keywordBlinkFrequency: 1
   _conversationName: Tiktoker True Anomaly
+  _indicatesAnomaly: 1

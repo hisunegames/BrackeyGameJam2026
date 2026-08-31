@@ -20,8 +20,9 @@ public class ShiftManager : MonoBehaviour
         "GlassesGirlQuest",
         "ProfessorQuest",
         "OtakuQuest",
-        "PranQuest",
         "TiktokerQuest"
+        // PranQuest deliberately excluded - Pran is currently force-non-questable, so no NPC
+        // could ever be matched to fulfill it if it got picked as a main objective.
     };
     [SerializeField] int _mainQuestCount = 4;
 

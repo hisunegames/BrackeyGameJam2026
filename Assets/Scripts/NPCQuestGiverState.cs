@@ -28,15 +28,4 @@ public class NPCQuestGiverState : MonoBehaviour
         DialogueLua.SetVariable("NPC.AssignedQuestName", AssignedQuestName ?? "");
         DialogueLua.SetVariable("NPC.IsAnomalyDecoy", IsAnomalyDecoy);
     }
-
-    // Call this from a dialogue Script field when the player accepts or rejects the offered quest,
-    // e.g.: SetVariable("temp", 1); -- then a C# bridge, or directly if you expose one via Lua registration.
-    public void ResolveQuest()
-    {
-        if (!IsQuestGiver || IsAnomalyDecoy)
-            return;
-
-        if (NPCQuestPoolManager.Instance != null)
-            NPCQuestPoolManager.Instance.NotifyQuestResolved(gameObject);
-    }
 }

@@ -7,7 +7,12 @@ public class NPCQuestPoolManager : MonoBehaviour
 {
     public static NPCQuestPoolManager Instance { get; private set; }
 
+    // X: real, non-anomaly main-quest givers.
     [SerializeField] int _maxActiveQuestGivers = 4;
+    // Z: total questable-looking NPCs for the day (X real + Y fake combined). Y isn't its own
+    // field - it's whatever's left of Z after X is spent, shared between true anomalies and
+    // unpicked-main-quest variants. Should be >= _maxActiveQuestGivers.
+    [SerializeField] int _maxTotalQuestableNpcs = 6;
     [ConversationPopup]
     [SerializeField] string _nonQuestableConversation = "NonQuestableNPC";
 
@@ -46,7 +51,9 @@ public class NPCQuestPoolManager : MonoBehaviour
         // day (the guaranteed one, plus any that roll isAnomaly=true from the random fill chance).
         _anomalyNpcs.Add(npc);
 
-        // Every anomaly always shows a quest icon too, as a decoy, regardless of the 4-slot limit.
+        // Provisional - HandleNewDayNextFrame re-evaluates every anomaly against the shared Z
+        // budget a frame later and may clear this if it doesn't fit. Set here too so an anomaly
+        // still shows something correct if that later pass never runs for some reason.
         if (npc.TryGetComponent(out NPCQuestGiverState state))
             state.SetQuestGiver(null, true);
     }
@@ -78,13 +85,55 @@ public class NPCQuestPoolManager : MonoBehaviour
             }
         }
 
-        FillEmptySlots();
+        FillEmptySlots(); // X real, non-anomaly main-quest givers
 
-        // Anyone not selected as one of today's real main-objective quest-givers is nonquestable -
-        // no fake decoy markers for the main-quest pool, so a lit-up marker always means a real
-        // objective and duplicate spawns of the same character never show more than one marker
-        // between them. The anomaly loop below is a separate, always-on decoy mechanic and isn't
-        // affected by this.
+        // Everything past X shares one combined "fake" budget (Y) that, added to X, caps out at
+        // _maxTotalQuestableNpcs (Z) questable-looking NPCs for the day. True anomalies get first
+        // claim on that shared budget - the "find the anomaly" mechanic matters more than a
+        // red-herring - then whatever's left goes to normal-pool NPCs sitting on an unpicked main
+        // quest name (a real quest, just not one of today's 4). Both look identical to a real
+        // quest-giver, so a lit marker is never proof an NPC matters.
+        int questableCount = _activeQuestGivers.Count;
+
+        // Quest names assigned to today's real givers that are ALSO flagged AllowsUncappedQuestSibling
+        // (confiscation types only) - lets us recognize "the other spawned copy of a genuine
+        // confiscation pair" apart from an incidental duplicate spawn. Fetch-item NPCs can share a
+        // quest name too (NPCManager's weighted-random fill can spawn an extra copy of any
+        // character on top of its guaranteed one), but that's an accident, not a deliberate pair,
+        // so it must NOT get the uncapped-sibling treatment - only genuine pairs should ever
+        // exceed Z, since that's the whole point of the confiscation puzzle (comparing both
+        // against the notepad clue).
+        HashSet<string> realPairQuestNames = new();
+        foreach (GameObject giver in _activeQuestGivers)
+        {
+            if (giver != null && giver.TryGetComponent(out NPCQuestMarker giverMarker)
+                && giverMarker.AllowsUncappedQuestSibling && !string.IsNullOrEmpty(giverMarker.QuestName))
+                realPairQuestNames.Add(giverMarker.QuestName);
+        }
+
+        // Same explicit-refresh reasoning as the loop below - a freshly spawned anomaly's own
+        // OnNewDayStarted subscription always misses the event that spawned it.
+        foreach (GameObject anomalyNpc in _anomalyNpcs)
+        {
+            if (anomalyNpc == null)
+                continue;
+
+            bool getsMarker = questableCount < _maxTotalQuestableNpcs;
+            if (getsMarker)
+                questableCount++;
+
+            if (anomalyNpc.TryGetComponent(out NPCQuestGiverState anomalyState))
+            {
+                if (getsMarker)
+                    anomalyState.SetQuestGiver(null, true);
+                else
+                    anomalyState.ClearQuestGiver();
+            }
+
+            if (anomalyNpc.TryGetComponent(out NPCQuestMarker anomalyMarker))
+                anomalyMarker.RefreshIndicator();
+        }
+
         foreach (GameObject npc in _normalPool)
         {
             if (npc == null)
@@ -99,25 +148,27 @@ public class NPCQuestPoolManager : MonoBehaviour
                 continue;
             }
 
-            state?.ClearQuestGiver();
-            if (npc.TryGetComponent(out NPCIdentity identity))
-                identity.SetGenericConversation(_nonQuestableConversation);
+            bool hasQuestName = marker != null && !marker.IsForcedNonQuestable && !string.IsNullOrEmpty(marker.QuestName);
+            bool isRealQuestSibling = hasQuestName && marker.AllowsUncappedQuestSibling && realPairQuestNames.Contains(marker.QuestName);
+            bool hasFakeQuest = hasQuestName && (isRealQuestSibling || questableCount < _maxTotalQuestableNpcs);
+
+            if (hasFakeQuest)
+            {
+                // Only counts against the shared budget if it's a generic decoy - a real quest's
+                // sibling copy is uncapped, it doesn't consume (or need) any of Z.
+                if (!isRealQuestSibling)
+                    questableCount++;
+
+                state?.SetQuestGiver(marker.QuestName, true);
+            }
+            else
+            {
+                state?.ClearQuestGiver();
+                if (npc.TryGetComponent(out NPCIdentity identity))
+                    identity.SetGenericConversation(_nonQuestableConversation);
+            }
 
             marker?.RefreshIndicator();
-        }
-
-        // Same explicit-refresh reasoning as above - a freshly spawned anomaly's own
-        // OnNewDayStarted subscription always misses the event that spawned it.
-        foreach (GameObject anomalyNpc in _anomalyNpcs)
-        {
-            if (anomalyNpc == null)
-                continue;
-
-            if (anomalyNpc.TryGetComponent(out NPCQuestGiverState anomalyState))
-                anomalyState.SetQuestGiver(null, true);
-
-            if (anomalyNpc.TryGetComponent(out NPCQuestMarker anomalyMarker))
-                anomalyMarker.RefreshIndicator();
         }
     }
 
@@ -142,33 +193,41 @@ public class NPCQuestPoolManager : MonoBehaviour
 
     bool TryFindNpcForQuest(string questName, out GameObject npc)
     {
+        // Prefers a non-anomaly candidate when more than one spawned copy shares this quest name
+        // (a confiscation type's two variants, each with independently-rolled anomaly status) -
+        // otherwise the quest could get permanently assigned to whichever copy happens to be the
+        // anomaly, which can never resolve it (confiscating it triggers the penalty instead).
+        // Still falls back to an anomaly candidate rather than dropping the quest outright, for
+        // the rare case every matching copy rolled anomaly.
+        GameObject anomalyFallback = null;
+
         foreach (GameObject candidate in _normalPool)
         {
             if (candidate == null || _activeQuestGivers.Contains(candidate))
                 continue;
 
-            if (candidate.TryGetComponent(out NPCQuestMarker marker) && !marker.IsForcedNonQuestable && marker.QuestName == questName)
+            if (!candidate.TryGetComponent(out NPCQuestMarker marker) || marker.IsForcedNonQuestable || marker.QuestName != questName)
+                continue;
+
+            bool isAnomaly = candidate.TryGetComponent(out NPCIdentity identity) && identity.IsAnomaly;
+            if (!isAnomaly)
             {
                 npc = candidate;
                 return true;
             }
+
+            if (anomalyFallback == null)
+                anomalyFallback = candidate;
+        }
+
+        if (anomalyFallback != null)
+        {
+            npc = anomalyFallback;
+            return true;
         }
 
         npc = null;
         return false;
-    }
-
-    // Called by NPCQuestGiverState.ResolveQuest() once a quest has been accepted or rejected -
-    // frees this NPC's slot and pulls in a new NPC + the next pending quest to replace it.
-    public void NotifyQuestResolved(GameObject npc)
-    {
-        if (!_activeQuestGivers.Remove(npc))
-            return;
-
-        if (npc.TryGetComponent(out NPCQuestGiverState state))
-            state.ClearQuestGiver();
-
-        FillEmptySlots();
     }
 
     // Debug only - fills the questable slots from whatever NPCs are available using placeholder

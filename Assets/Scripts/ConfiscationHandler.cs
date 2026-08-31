@@ -17,6 +17,11 @@ public class ConfiscationHandler : TalkableNpc
 
     public override bool CanInteract => base.CanInteract && !HasBeenConfiscated;
 
+    // Confiscating only makes sense for an NPC that's actually part of today's questable pool -
+    // NPCQuestPoolManager clears IsQuestGiver for everyone else, so a non-questable NPC prompts
+    // like any other flavor NPC instead of falsely inviting the player to confiscate it.
+    public override string InteractPrompt => _questGiverState != null && _questGiverState.IsQuestGiver ? base.InteractPrompt : "Talk";
+
     bool _pendingAnomalyPenalty;
 
     void Awake()
@@ -43,15 +48,11 @@ public class ConfiscationHandler : TalkableNpc
             return;
         }
 
-        // Resolves whichever quest NPCQuestPoolManager actually assigned to THIS instance today
-        // (AssignedQuestName), not a static per-prefab quest name - FillEmptySlots hands quests to
-        // whichever unassigned pool NPC it randomly picks, unrelated to that NPC's own character,
-        // so two spawned copies of the same prefab can end up holding completely different quests.
+        // Marks the quest done, but deliberately doesn't free up this NPC's questable slot for a
+        // replacement - today's questable NPCs are the whole pool the player narrows down between
+        // anomaly/human, not a queue to cycle through, so a resolved quest just stays resolved.
         if (_questGiverState != null && _questGiverState.IsQuestGiver && !_questGiverState.IsAnomalyDecoy && !string.IsNullOrEmpty(_questGiverState.AssignedQuestName))
-        {
             QuestLog.SetQuestState(_questGiverState.AssignedQuestName, QuestState.Success);
-            _questGiverState.ResolveQuest();
-        }
     }
 
     // Sent by Dialogue System for Unity to conversation participants

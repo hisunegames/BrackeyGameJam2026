@@ -71,9 +71,9 @@ public class NoteAppUIManager : MonoBehaviour
         if (Keyboard.current == null)
             return;
 
-        if (Keyboard.current.zKey.wasPressedThisFrame)
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
             PreviousPage();
-        else if (Keyboard.current.cKey.wasPressedThisFrame)
+        else if (Keyboard.current.digit2Key.wasPressedThisFrame)
             NextPage();
     }
 

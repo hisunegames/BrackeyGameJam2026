@@ -9,7 +9,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
 
     bool _hasBeenInteractedWith;
 
-    public string InteractPrompt
+    public virtual string InteractPrompt
     {
         get => _promptText;
         set => _promptText = value;

@@ -24,3 +24,4 @@ MonoBehaviour:
   - Owns a replica "Sword"
   _keywordBlinkFrequency: 1
   _conversationName: Otaku Variant2
+  _indicatesAnomaly: 1

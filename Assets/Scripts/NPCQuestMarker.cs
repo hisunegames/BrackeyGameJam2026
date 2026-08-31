@@ -17,8 +17,17 @@ public class NPCQuestMarker : MonoBehaviour
     // pool entirely even if _questName is filled in, without needing to clear it.
     [SerializeField] bool _forceNonQuestable;
 
+    // True only for NPC types that are deliberately spawned in same-quest-name pairs (confiscation
+    // types, via ConfiscationNpcSpawner) - lets NPCQuestPoolManager tell "this is the other half
+    // of a genuine pair, always show it too" apart from "this happens to be an incidental
+    // duplicate spawn of a fetch-item character with nothing to do with today's real giver"
+    // (NPCManager's weighted-random fill can spawn extra copies of any character). Set true on
+    // the shared confiscation-type base prefab only - fetch-item types stay false by default.
+    [SerializeField] bool _allowsUncappedQuestSibling;
+
     public string QuestName => _questName;
     public bool IsForcedNonQuestable => _forceNonQuestable;
+    public bool AllowsUncappedQuestSibling => _allowsUncappedQuestSibling;
 
     QuestMarkerStateBridge _questStateBridge;
 

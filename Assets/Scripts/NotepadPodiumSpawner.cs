@@ -99,6 +99,11 @@ public class NotepadPodiumSpawner : MonoBehaviour
         return buckets;
     }
 
+    // Only the real, non-anomaly main-quest givers ever contribute a note - deliberately doesn't
+    // touch NPCQuestPoolManager.AnomalyNpcs. Standard anomalies are identified by having no note
+    // at all, but note-driven-anomaly types (Otaku/Pran/Tiktoker) DO get a real note regardless
+    // of anomaly status, so pulling from AnomalyNpcs here would leak an anomaly's note onto a
+    // podium the moment any fetch-item type adopted the same pattern.
     List<NoteData> CollectDayNotes()
     {
         List<NoteData> notes = new();
@@ -107,9 +112,6 @@ public class NotepadPodiumSpawner : MonoBehaviour
         {
             foreach (GameObject npc in NPCQuestPoolManager.Instance.ActiveQuestGivers)
                 AddNoteFor(npc, notes);
-
-            foreach (GameObject anomalyNpc in NPCQuestPoolManager.Instance.AnomalyNpcs)
-                AddNoteFor(anomalyNpc, notes);
         }
 
         return notes;
